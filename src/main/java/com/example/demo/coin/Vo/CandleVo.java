@@ -1,84 +1,132 @@
-package com.example.demo.coin.Vo;
+package com.example.demo.coin.VO;
 
-public class CandleVo { 
-	
-	String market;
-	String candle_date_time_utc;
-	String candle_date_time_kst;
-	Double opening_price;
-	Double high_price;
-	Double low_price;
-	Double trade_price;
-	Double candle_acc_trade_volumel;
-	int unit;
-	public String getMarket() {
-		return market;
-	}
-	public void setMarket(String market) {
-		this.market = market;
-	}
-	public String getCandle_date_time_utc() {
-		return candle_date_time_utc;
-	}
-	public void setCandle_date_time_utc(String candle_date_time_utc) {
-		this.candle_date_time_utc = candle_date_time_utc;
-	}
-	public String getcandle_date_time_kst() {
-		return candle_date_time_kst;
-	}
-	public void setcandle_date_time_kst(String candle_date_time_kst) {
-		this.candle_date_time_kst = candle_date_time_kst;
-	}
-	public Double getOpening_price() {
-		return opening_price;
-	}
-	public void setOpening_price(Double opening_price) {
-		this.opening_price = opening_price;
-	}
-	public Double getHigh_price() {
-		return high_price;
-	}
-	public void setHigh_price(Double high_price) {
-		this.high_price = high_price;
-	}
-	public Double getLow_price() {
-		return low_price;
-	}
-	public void setLow_price(Double low_price) {
-		this.low_price = low_price;
-	}
-	public Double getTrade_price() {
-		return trade_price;
-	}
-	public void setTrade_price(Double trade_price) {
-		this.trade_price = trade_price;
-	}
-	public Double getCandle_acc_trade_volumel() {
-		return candle_acc_trade_volumel;
-	}
-	public void setCandle_acc_trade_volumel(Double candle_acc_trade_volumel) {
-		this.candle_acc_trade_volumel = candle_acc_trade_volumel;
-	}
-	public int getUnit() {
-		return unit;
-	}
-	public void setUnit(int unit) {
-		this.unit = unit;
-	}
+public class CandleVo {
+   
+    private long klineOpenTime;                 // Kline open time (캔들 시작 시간)
+    private String openPrice;                   // Open price (시가)
+    private String highPrice;                   // High price (고가)
+    private String lowPrice;                    // Low price (저가)
+    private String closePrice;                  // Close price (종가)
+    private String volume;                      // Volume (거래량)
+    private long klineCloseTime;                // Kline Close time (캔들 종료 시간)
+    private String quoteAssetVolume;            // Quote asset volume (거래 대상 자산의 거래량)
+    private int numberOfTrades;                 // Number of trades (거래 횟수)
+    private String takerBuyBaseAssetVolume;     // Taker buy base asset volume (매수 주체의 거래량)
+    private String takerBuyQuoteAssetVolume;    // Taker buy quote asset volume (매수 주체의 거래 대상 자산 거래량)
+    private String unusedField;        // Unused field, ignore. (사용되지 않는 필드, 무시)
+    public long getKlineOpenTime() {
+        return klineOpenTime;
+    }
 
+    public void setKlineOpenTime(long klineOpenTime) {
+        this.klineOpenTime = klineOpenTime;
+    }
+
+    public String getOpenPrice() {
+        return openPrice;
+    }
+
+    public void setOpenPrice(String openPrice) {
+        this.openPrice = openPrice;
+    }
+
+    public String getHighPrice() {
+        return highPrice;
+    }
+
+    public void setHighPrice(String highPrice) {
+        this.highPrice = highPrice;
+    }
+
+    public String getLowPrice() {
+        return lowPrice;
+    }
+
+    public void setLowPrice(String lowPrice) {
+        this.lowPrice = lowPrice;
+    }
+
+    public String getClosePrice() {
+        return closePrice;
+    }
+
+    public void setClosePrice(String closePrice) {
+        this.closePrice = closePrice;
+    }
+
+    public String getVolume() {
+        return volume;
+    }
+
+    public void setVolume(String volume) {
+        this.volume = volume;
+    }
+
+    public long getKlineCloseTime() {
+        return klineCloseTime;
+    }
+
+    public void setKlineCloseTime(long klineCloseTime) {
+        this.klineCloseTime = klineCloseTime;
+    }
+
+    public String getQuoteAssetVolume() {
+        return quoteAssetVolume;
+    }
+
+    public void setQuoteAssetVolume(String quoteAssetVolume) {
+        this.quoteAssetVolume = quoteAssetVolume;
+    }
+
+    public int getNumberOfTrades() {
+        return numberOfTrades;
+    }
+
+    public void setNumberOfTrades(int numberOfTrades) {
+        this.numberOfTrades = numberOfTrades;
+    }
+
+    public String getTakerBuyBaseAssetVolume() {
+        return takerBuyBaseAssetVolume;
+    }
+
+    public void setTakerBuyBaseAssetVolume(String takerBuyBaseAssetVolume) {
+        this.takerBuyBaseAssetVolume = takerBuyBaseAssetVolume;
+    }
+
+    public String getTakerBuyQuoteAssetVolume() {
+        return takerBuyQuoteAssetVolume;
+    }
+
+    public void setTakerBuyQuoteAssetVolume(String takerBuyQuoteAssetVolume) {
+        this.takerBuyQuoteAssetVolume = takerBuyQuoteAssetVolume;
+    }
+
+    public String getUnusedField() {
+        return unusedField;
+    }
+
+    public void setUnusedField(String unusedField) {
+        this.unusedField = unusedField;
+    }
+
+
+        // 생성자, Getter, Setter, toString 등의 필요한 메소드를 구현합니다.
+    
+        // 주석
+        // - Kline open time: 캔들 시작 시간
+        // - Open price: 시가
+        // - High price: 고가
+        // - Low price: 저가
+        // - Close price: 종가
+        // - Volume: 거래량
+        // - Kline Close time: 캔들 종료 시간
+        // - Quote asset volume: 거래 대상 자산의 거래량
+        // - Number of trades: 거래 횟수
+        // - Taker buy base asset volume: 매수 주체의 거래량
+        // - Taker buy quote asset volume: 매수 주체의 거래 대상 자산 거래량
+        // - Unused field, ignore.: 사용되지 않는 필드, 무시
+
+        
 }
-/*
-market	마켓명	String
-candle_date_time_utc	캔들 기준 시각(UTC 기준)
-포맷: yyyy-MM-dd'T'HH:mm:ss	String
-candle_date_time_kst	캔들 기준 시각(KST 기준)
-포맷: yyyy-MM-dd'T'HH:mm:ss	String
-opening_price	시가	Double
-high_price	고가	Double
-low_price	저가	Double
-trade_price	종가	Double
-timestamp	해당 캔들에서 마지막 틱이 저장된 시각	Long
-candle_acc_trade_price	누적 거래 금액	Double
-candle_acc_trade_volume	누적 거래량	Double
-unit	분 단위(유닛)	Integer
-*/
+
