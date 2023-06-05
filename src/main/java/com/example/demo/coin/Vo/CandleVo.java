@@ -1,18 +1,19 @@
-package com.example.demo.coin.VO;
+package com.example.demo.coin.Vo;
+
 
 public class CandleVo {
    
     private long klineOpenTime;                 // Kline open time (캔들 시작 시간)
-    private String openPrice;                   // Open price (시가)
-    private String highPrice;                   // High price (고가)
-    private String lowPrice;                    // Low price (저가)
-    private String closePrice;                  // Close price (종가)
-    private String volume;                      // Volume (거래량)
+    private Double openPrice;                   // Open price (시가)
+    private double highPrice;                   // High price (고가)
+    private double lowPrice;                    // Low price (저가)
+    private double closePrice;                  // Close price (종가)
+    private double volume;                      // Volume (거래량)
     private long klineCloseTime;                // Kline Close time (캔들 종료 시간)
-    private String quoteAssetVolume;            // Quote asset volume (거래 대상 자산의 거래량)
+    private double quoteAssetVolume;            // Quote asset volume (거래 대상 자산의 거래량)
     private int numberOfTrades;                 // Number of trades (거래 횟수)
-    private String takerBuyBaseAssetVolume;     // Taker buy base asset volume (매수 주체의 거래량)
-    private String takerBuyQuoteAssetVolume;    // Taker buy quote asset volume (매수 주체의 거래 대상 자산 거래량)
+    private double takerBuyBaseAssetVolume;     // Taker buy base asset volume (매수 주체의 거래량)
+    private double takerBuyQuoteAssetVolume;    // Taker buy quote asset volume (매수 주체의 거래 대상 자산 거래량)
     private String unusedField;        // Unused field, ignore. (사용되지 않는 필드, 무시)
     public long getKlineOpenTime() {
         return klineOpenTime;
@@ -22,43 +23,43 @@ public class CandleVo {
         this.klineOpenTime = klineOpenTime;
     }
 
-    public String getOpenPrice() {
+    public Double getOpenPrice() {
         return openPrice;
     }
 
-    public void setOpenPrice(String openPrice) {
+    public void setOpenPrice(Double openPrice) {
         this.openPrice = openPrice;
     }
 
-    public String getHighPrice() {
+    public double getHighPrice() {
         return highPrice;
     }
 
-    public void setHighPrice(String highPrice) {
+    public void setHighPrice(double highPrice) {
         this.highPrice = highPrice;
     }
 
-    public String getLowPrice() {
+    public double getLowPrice() {
         return lowPrice;
     }
 
-    public void setLowPrice(String lowPrice) {
+    public void setLowPrice(double lowPrice) {
         this.lowPrice = lowPrice;
     }
 
-    public String getClosePrice() {
+    public double getClosePrice() {
         return closePrice;
     }
 
-    public void setClosePrice(String closePrice) {
+    public void setClosePrice(double closePrice) {
         this.closePrice = closePrice;
     }
 
-    public String getVolume() {
+    public double getVolume() {
         return volume;
     }
 
-    public void setVolume(String volume) {
+    public void setVolume(double volume) {
         this.volume = volume;
     }
 
@@ -70,11 +71,11 @@ public class CandleVo {
         this.klineCloseTime = klineCloseTime;
     }
 
-    public String getQuoteAssetVolume() {
+    public double getQuoteAssetVolume() {
         return quoteAssetVolume;
     }
 
-    public void setQuoteAssetVolume(String quoteAssetVolume) {
+    public void setQuoteAssetVolume(double quoteAssetVolume) {
         this.quoteAssetVolume = quoteAssetVolume;
     }
 
@@ -86,19 +87,19 @@ public class CandleVo {
         this.numberOfTrades = numberOfTrades;
     }
 
-    public String getTakerBuyBaseAssetVolume() {
+    public double getTakerBuyBaseAssetVolume() {
         return takerBuyBaseAssetVolume;
     }
 
-    public void setTakerBuyBaseAssetVolume(String takerBuyBaseAssetVolume) {
+    public void setTakerBuyBaseAssetVolume(double takerBuyBaseAssetVolume) {
         this.takerBuyBaseAssetVolume = takerBuyBaseAssetVolume;
     }
 
-    public String getTakerBuyQuoteAssetVolume() {
+    public double getTakerBuyQuoteAssetVolume() {
         return takerBuyQuoteAssetVolume;
     }
 
-    public void setTakerBuyQuoteAssetVolume(String takerBuyQuoteAssetVolume) {
+    public void setTakerBuyQuoteAssetVolume(double takerBuyQuoteAssetVolume) {
         this.takerBuyQuoteAssetVolume = takerBuyQuoteAssetVolume;
     }
 
@@ -109,6 +110,8 @@ public class CandleVo {
     public void setUnusedField(String unusedField) {
         this.unusedField = unusedField;
     }
+
+
 
 
         // 생성자, Getter, Setter, toString 등의 필요한 메소드를 구현합니다.

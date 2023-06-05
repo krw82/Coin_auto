@@ -4,13 +4,13 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
+import java.util.Comparator;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.coin.VO.CandleVo;
+import com.example.demo.coin.Vo.CandleVo;
 import com.google.gson.Gson;
 
 @Component
@@ -20,12 +20,6 @@ public  class Util {
         if (gson == null) gson = new Gson();
         return gson;
     }
-
-	
-	
-	
-	
-	
 
 	public static List<CandleVo> JsonToVo(String json) throws IOException {
 		ArrayList<CandleVo> list = new ArrayList<CandleVo>();
@@ -37,34 +31,27 @@ public  class Util {
 			CandleVo data = new CandleVo();
 			
 			data.setKlineOpenTime(item.getLong(0));
-			data.setOpenPrice(item.getString(1));
-			data.setHighPrice(item.getString(2));
-			data.setLowPrice(item.getString(3));
-			data.setClosePrice(item.getString(4));
-			data.setVolume(item.getString(5));
+			data.setOpenPrice(Double.parseDouble(item.getString(1)));
+			data.setHighPrice(Double.parseDouble(item.getString(2)));
+			data.setLowPrice(Double.parseDouble(item.getString(3)));
+			data.setClosePrice(Double.parseDouble(item.getString(4)));
+			data.setVolume(Double.parseDouble(item.getString(5)));
 			data.setKlineCloseTime(item.getLong(5));
-			data.setQuoteAssetVolume(item.getString(5));
+			data.setQuoteAssetVolume(Double.parseDouble(item.getString(5)));
 			data.setNumberOfTrades(item.getInt(5));
-			data.setTakerBuyBaseAssetVolume(item.getString(5));
-			data.setTakerBuyQuoteAssetVolume(item.getString(5));
+			data.setTakerBuyBaseAssetVolume(Double.parseDouble(item.getString(5)));
+			data.setTakerBuyQuoteAssetVolume(Double.parseDouble(item.getString(5)));
 			data.setUnusedField(item.getString(5));
 	
 			list.add(data);
 		}
-		Collections.sort(list, (o1, o2) -> compareByCandleDateTime(o1, o2));
+		list.sort(Comparator.comparingLong(CandleVo::getKlineOpenTime).reversed());
 		return list;
 	
 	}
 
-	
+
 
 	
- // Comparator 인터페이스를 구현하는 메소드를 정의
- 
-	public static int compareByCandleDateTime(CandleVo o1, CandleVo o2) {
-	
-	  // date1이 date2보다 최신이면 음수, 같으면 0, 오래되면 양수를 반환
-	  return Long.compare(o2.getKlineOpenTime(), o1.getKlineOpenTime());
-	}
 
 }

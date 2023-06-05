@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.coin.BinanceApi.BinanceCandles;
-import com.example.demo.coin.VO.CandleVo;
+import com.example.demo.coin.TA.BasicTa;
+import com.example.demo.coin.Vo.CandleVo;
 import com.example.demo.coin.comm.Util;
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Basic;
 
 
 @Controller
@@ -24,8 +26,15 @@ public class coin {
     public String test() throws IOException {
         System.out.println("sad");
 
-        List<CandleVo> list =Util.JsonToVo(bC.getCandles("BTCUSDT", "1h", 3));
-        System.out.println(list.get(0).getOpenPrice());
+        List<CandleVo> list =Util.JsonToVo(bC.getCandles("BTCUSDT", "1h",200));
+        BasicTa ta=new BasicTa(list);
+        
+        System.out.println(ta.rsi(14,0));
+       // System.out.println(list.get(0).getClosePrice());
+
+       
+        
+        
 
         return "candles";
     }
