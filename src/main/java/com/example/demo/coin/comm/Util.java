@@ -54,12 +54,12 @@ public class Util {
 
 	public static List<TickerVo> TickerToVo(String json) throws IOException {
 		ArrayList<TickerVo> list = new ArrayList<TickerVo>();
-		System.out.println(json);
 
 		JSONArray ja = new JSONArray(json);
 
 		for (int i = 0; i < ja.length(); i++) {
 			JSONArray item = ja.getJSONArray(i);
+
 			TickerVo tickerVo = new TickerVo();
 
 			tickerVo.setSymbol(item.getString(0));
@@ -85,6 +85,7 @@ public class Util {
 			tickerVo.setCount(item.getLong(20));
 
 			list.add(tickerVo);
+
 		}
 		// list.sort(Comparator.comparingLong(CandleVo::getKlineOpenTime).reversed());
 		return list;
