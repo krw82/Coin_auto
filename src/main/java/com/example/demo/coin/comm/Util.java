@@ -54,6 +54,7 @@ public class Util {
 
 	public static List<TickerVo> TickerToVo(String json) throws IOException {
 		ArrayList<TickerVo> list = new ArrayList<TickerVo>();
+		System.out.println(json);
 
 		JSONArray ja = new JSONArray(json);
 

@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.coin.BinanceApi.BinanceBc;
 
-import com.example.demo.coin.TA.BasicTa;
 import com.example.demo.coin.TA.Bridge;
 import com.example.demo.coin.Vo.CandleVo;
+import com.example.demo.coin.Vo.TickerVo;
 import com.example.demo.coin.comm.Util;
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Basic;
 
 @Controller
 @RequestMapping("/api")
@@ -25,10 +24,18 @@ public class coin {
 
     @GetMapping("/kim")
     public String test() throws IOException {
-        System.out.println("sad");
+        int j = 0;
+        List<TickerVo> TickerList = Util.TickerToVo(bC.getTicker());
 
-        List<CandleVo> list = Util.PriceToVo(bC.getCandle("MINAUSDT", "4h", 200));
-        Bridge.PythonTa(list);
+        for (TickerVo i : TickerList) {
+            j++;
+            List<CandleVo> CandleList = Util.PriceToVo(bC.getCandle(i.getSymbol(), "4h", 200));
+            Bridge.PythonTa(CandleList);
+            if (j == 10) {
+                break;
+
+            }
+        }
 
         return "candles";
     }
