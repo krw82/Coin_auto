@@ -1,6 +1,5 @@
 package com.example.demo.coin.BinanceApi;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import org.springframework.stereotype.Component;
 

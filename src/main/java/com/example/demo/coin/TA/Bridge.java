@@ -3,14 +3,17 @@ package com.example.demo.coin.TA;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.coin.Vo.CandleVo;
+import com.example.demo.coin.Vo.TickerAnalysisVo;
 import com.example.demo.coin.comm.Util;
+import com.google.gson.Gson;
 
 public class Bridge {
 
-    public static void PythonTa(List<CandleVo> list) {
+    public static void PythonTa(List<CandleVo> list, String symbol) {
 
         String json = Util.gsonGetInstance().toJson(list);
         String jsonFilename = "data.json";
@@ -19,7 +22,7 @@ public class Bridge {
         // "/Users/jeong-woncheol/eclipse-workspace_sec/demo/Coin_auto/venv/bin/python";
 
         String[] command = new String[] { pythonPath, "src/main/java/com/example/demo/coin/TA/BasicTa.py",
-                jsonFilename };
+                jsonFilename, symbol };
 
         ProcessBuilder processBuilder = new ProcessBuilder(command);
         try {
@@ -37,8 +40,12 @@ public class Bridge {
                 System.err.println(line);
                 // throw new Exception();
             }
+
+            Gson gson = Util.gsonGetInstance();
+            List<TickerAnalysisVo> VoList = new ArrayList<TickerAnalysisVo>();
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
+                VoList.add(gson.fromJson(line, TickerAnalysisVo.class));
             }
 
             process.waitFor();
