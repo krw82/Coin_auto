@@ -40,7 +40,6 @@ public class BinanceInterface {
         while ((line = reader.readLine()) != null) {
             jsonBuilder.append(line);
         }
-        inputStream.close();
         return jsonBuilder.toString();
 
     }

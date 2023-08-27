@@ -24,14 +24,17 @@ public class coin {
 
     @GetMapping("/kim")
     public String test() throws IOException {
-
+        int j = 0;
         List<TickerVo> TickerList = Util.TickerToVo(bC.getTicker());
 
         for (TickerVo i : TickerList) {
+            j++;
+            List<CandleVo> CandleList = Util.PriceToVo(bC.getCandle(i.getSymbol(), "4h", 200));
+            Bridge.PythonTa(CandleList);
+            if (j == 10) {
+                break;
 
-            List<CandleVo> CandleList = Util.PriceToVo(bC.getCandle(i.getSymbol(), "15m", 200));
-            Bridge.PythonTa(CandleList, i.getSymbol());
-
+            }
         }
 
         return "candles";

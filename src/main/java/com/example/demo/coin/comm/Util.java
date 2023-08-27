@@ -3,11 +3,10 @@ package com.example.demo.coin.comm;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.coin.Vo.CandleVo;
@@ -32,18 +31,19 @@ public class Util {
 		for (int i = 0; i < ja.length(); i++) {
 			JSONArray item = ja.getJSONArray(i);
 			CandleVo data = new CandleVo();
+
 			data.setKlineOpenTime(item.getLong(0));
 			data.setOpenPrice(Double.parseDouble(item.getString(1)));
 			data.setHighPrice(Double.parseDouble(item.getString(2)));
 			data.setLowPrice(Double.parseDouble(item.getString(3)));
 			data.setClosePrice(Double.parseDouble(item.getString(4)));
 			data.setVolume(Double.parseDouble(item.getString(5)));
-			data.setKlineCloseTime(item.getLong(6));
-			data.setQuoteAssetVolume(Double.parseDouble(item.getString(7)));
-			data.setNumberOfTrades(item.getInt(8));
-			data.setTakerBuyBaseAssetVolume(Double.parseDouble(item.getString(9)));
-			data.setTakerBuyQuoteAssetVolume(Double.parseDouble(item.getString(10)));
-			data.setUnusedField(item.getString(11));
+			data.setKlineCloseTime(item.getLong(5));
+			data.setQuoteAssetVolume(Double.parseDouble(item.getString(5)));
+			data.setNumberOfTrades(item.getInt(5));
+			data.setTakerBuyBaseAssetVolume(Double.parseDouble(item.getString(5)));
+			data.setTakerBuyQuoteAssetVolume(Double.parseDouble(item.getString(5)));
+			data.setUnusedField(item.getString(5));
 
 			list.add(data);
 		}
@@ -58,50 +58,37 @@ public class Util {
 		JSONArray ja = new JSONArray(json);
 
 		for (int i = 0; i < ja.length(); i++) {
-			JSONObject item = ja.getJSONObject(i);
+			JSONArray item = ja.getJSONArray(i);
 
 			TickerVo tickerVo = new TickerVo();
 
-			tickerVo.setSymbol(item.getString("symbol"));
-			tickerVo.setPriceChange(item.getString("priceChange"));
-			tickerVo.setPriceChangePercent(item.getString("priceChangePercent"));
-			tickerVo.setWeightedAvgPrice(item.getString("weightedAvgPrice"));
-			tickerVo.setPrevClosePrice(item.getString("prevClosePrice"));
-			tickerVo.setLastPrice(item.getString("lastPrice"));
-			tickerVo.setLastQty(item.getString("lastQty"));
-			tickerVo.setBidPrice(item.getString("bidPrice"));
-			tickerVo.setBidQty(item.getString("bidQty"));
-			tickerVo.setAskPrice(item.getString("askPrice"));
-			tickerVo.setAskQty(item.getString("askQty"));
-			tickerVo.setOpenPrice(item.getString("openPrice"));
-			tickerVo.setHighPrice(item.getString("highPrice"));
-			tickerVo.setLowPrice(item.getString("lowPrice"));
-			tickerVo.setVolume(item.getString("volume"));
-			tickerVo.setQuoteVolume(item.getString("quoteVolume"));
-			tickerVo.setOpenTime(item.getLong("openTime"));
-			tickerVo.setCloseTime(item.getLong("closeTime"));
-			tickerVo.setFirstId(item.getLong("firstId"));
-			tickerVo.setLastId(item.getLong("lastId"));
-			tickerVo.setCount(item.getLong("count"));
+			tickerVo.setSymbol(item.getString(0));
+			tickerVo.setPriceChange(item.getString(1));
+			tickerVo.setPriceChangePercent(item.getString(2));
+			tickerVo.setWeightedAvgPrice(item.getString(3));
+			tickerVo.setPrevClosePrice(item.getString(4));
+			tickerVo.setLastPrice(item.getString(5));
+			tickerVo.setLastQty(item.getString(6));
+			tickerVo.setBidPrice(item.getString(7));
+			tickerVo.setBidQty(item.getString(8));
+			tickerVo.setAskPrice(item.getString(9));
+			tickerVo.setAskQty(item.getString(10));
+			tickerVo.setOpenPrice(item.getString(11));
+			tickerVo.setHighPrice(item.getString(12));
+			tickerVo.setLowPrice(item.getString(13));
+			tickerVo.setVolume(item.getString(14));
+			tickerVo.setQuoteVolume(item.getString(15));
+			tickerVo.setOpenTime(item.getLong(16));
+			tickerVo.setCloseTime(item.getLong(17));
+			tickerVo.setFirstId(item.getLong(18));
+			tickerVo.setLastId(item.getLong(19));
+			tickerVo.setCount(item.getLong(20));
 
 			list.add(tickerVo);
+
 		}
 		// list.sort(Comparator.comparingLong(CandleVo::getKlineOpenTime).reversed());
-		// return list;
-
-		// Filter for symbols ending with "USDT"
-		List<TickerVo> filteredList = list.stream()
-				.filter(tickerVo -> tickerVo.getSymbol().endsWith("USDT"))
-				.collect(Collectors.toList());
-
-		// Sort in descending order by volume
-		filteredList
-				.sort((a, b) -> Double.compare(
-						Double.parseDouble(b.getVolume()) * Double.parseDouble(b.getWeightedAvgPrice()),
-						Double.parseDouble(a.getVolume()) * Double.parseDouble(a.getWeightedAvgPrice())));
-
-		// Return only the top 10
-		return filteredList.stream().limit(30).collect(Collectors.toList());
+		return list;
 
 	}
 
