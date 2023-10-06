@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.example.demo.coin.Mapper.CandleMapper">
+
+    <insert id="insertCalc" parameterType="com.example.demo.coin.Vo.TickerAnalysisVo">
+        INSERT INTO coin_analysis (
+            symbol
+            ,rsibet
+            ,mficg
+            ,macrossover_30
+            ,macrossover_180
+            ,macrossunder_30
+            ,macrossunder_180
+            ,candledoji
+            ,cehckdivergence_rsi_14
+            ,cehckdivergence_mfi_14
+            ,candlehammer
+            ,candleinversehammer
+            ,macdSignal
+            ,calc
+            ,regdtm
+        )
+        VALUES
+        (
+        #{symbol},
+        #{rsiBet},
+        #{mfiCg},
+        #{maCrossOver_30},
+        #{maCrossOver_180},
+        #{maCrossUnder_30},
+        #{maCrossUnder_180},
+        #{candleDoji},
+        #{CehckDivergence_rsi_14},
+        #{CehckDivergence_mfi_14},
+        #{candleHammer},
+        #{candleInverseHammer},
+        #{macdSignal},
+        #{calc}
+        ,now()
+        )
+    </insert>
+
+    <select id="selectcalc" resultType="com.example.demo.coin.Vo.TickerAnalysisVo">
+        SELECT
+            symbol,calc
+        FROM
+            coin_analysis
+        WHERE calc != 0 AND (regdtm BETWEEN CURRENT_TIMESTAMP - INTERVAL '20 minutes' AND CURRENT_TIMESTAMP)
+
+
+    </select>
+
+
+</mapper>

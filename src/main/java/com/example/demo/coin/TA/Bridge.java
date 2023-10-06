@@ -1,7 +1,6 @@
 package com.example.demo.coin.TA;
 
 import java.io.BufferedReader;
-import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,23 +12,24 @@ import com.google.gson.Gson;
 
 public class Bridge {
 
-    public static void PythonTa(List<CandleVo> list, String symbol) {
+    public static List<TickerAnalysisVo> PythonTa(List<CandleVo> list, String symbol) {
 
         String json = Util.gsonGetInstance().toJson(list);
-        String jsonFilename = "data.json";
-        String pythonPath = "C:\\Users\\AgencyPro_112\\Desktop\\krw_82\\Coin_auto\\venv\\Scripts\\python";
+        List<TickerAnalysisVo> VoList = new ArrayList<TickerAnalysisVo>();
         // String pythonPath =
         // "/Users/jeong-woncheol/eclipse-workspace_sec/demo/Coin_auto/venv/bin/python";
+        // String pythonPath =
+        // "/Users/jeong-woncheol/eclipse-workspace_sec/demo/Coin_auto/venv/bin/python";
+        // //개발
+        String pythonPath = "/home/opc/my_venv/bin/python";
+        // String TaPath = "src/main/java/com/example/demo/coin/TA/BasicTa.py";// 개발
+        String TaPath = "/home/opc/BasicTa.py";
 
-        String[] command = new String[] { pythonPath, "src/main/java/com/example/demo/coin/TA/BasicTa.py",
-                jsonFilename, symbol };
+        String[] command = new String[] { pythonPath, TaPath,
+                json, symbol };
 
         ProcessBuilder processBuilder = new ProcessBuilder(command);
         try {
-            FileWriter file = new FileWriter(jsonFilename);
-            file.write(json);
-            file.flush();
-            file.close();
 
             Process process = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -42,9 +42,9 @@ public class Bridge {
             }
 
             Gson gson = Util.gsonGetInstance();
-            List<TickerAnalysisVo> VoList = new ArrayList<TickerAnalysisVo>();
+
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+
                 VoList.add(gson.fromJson(line, TickerAnalysisVo.class));
             }
 
@@ -53,7 +53,7 @@ public class Bridge {
             e.printStackTrace();
         }
 
-        return;
+        return VoList;
 
     }
 

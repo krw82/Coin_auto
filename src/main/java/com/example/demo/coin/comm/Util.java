@@ -12,11 +12,16 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.coin.Vo.CandleVo;
 import com.example.demo.coin.Vo.TickerVo;
+import com.example.demo.kakao.KakaoAccessTokenResponse;
 import com.google.gson.Gson;
 
 @Component
 public class Util {
 	private static Gson gson;
+
+	public Util() {
+		gsonGetInstance();
+	}
 
 	public static Gson gsonGetInstance() {
 		if (gson == null)
@@ -95,13 +100,26 @@ public class Util {
 				.collect(Collectors.toList());
 
 		// Sort in descending order by volume
-		filteredList
-				.sort((a, b) -> Double.compare(
-						Double.parseDouble(b.getVolume()) * Double.parseDouble(b.getWeightedAvgPrice()),
-						Double.parseDouble(a.getVolume()) * Double.parseDouble(a.getWeightedAvgPrice())));
+		/*
+		 * filteredList
+		 * .sort((a, b) -> Double.compare(
+		 * Double.parseDouble(b.getVolume()) *
+		 * Double.parseDouble(b.getWeightedAvgPrice()),
+		 * Double.parseDouble(a.getVolume()) *
+		 * Double.parseDouble(a.getWeightedAvgPrice())));
+		 */
 
 		// Return only the top 10
-		return filteredList.stream().limit(30).collect(Collectors.toList());
+		return filteredList;
+
+	}
+
+	public static KakaoAccessTokenResponse kakaoVo(String json) throws IOException {
+
+		KakaoAccessTokenResponse result = gson.fromJson(json, KakaoAccessTokenResponse.class);
+
+		// list.sort(Comparator.comparingLong(CandleVo::getKlineOpenTime).reversed());
+		return result;
 
 	}
 

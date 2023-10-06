@@ -13,6 +13,24 @@ public class TickerAnalysisVo {
     private int CehckDivergence_mfi_14;
     private int candleHammer;
     private int candleInverseHammer;
+    private int macdSignal;
+    private int calc;
+
+    public int getMacdSignal() {
+        return macdSignal;
+    }
+
+    public void setMacdSignal(int macdSignal) {
+        this.macdSignal = macdSignal;
+    }
+
+    public int getCalc() {
+        return calc;
+    }
+
+    public void setCalc(int calc) {
+        this.calc = calc;
+    }
 
     public String getSymbol() {
         return symbol;
