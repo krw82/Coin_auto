@@ -22,8 +22,8 @@ public class kakaoController {
     public RedirectView test() throws IOException {
 
         String restApiKey = "";
-
-        String redirectUri = "http://localhost:8080/kakao/token2";
+        restApiKey = "e60529beba7c326ce54d1307631d7d7f";
+        String redirectUri = "http://131.186.30.55:8080/kakao/token2";
         String url = "https://kauth.kakao.com/oauth/authorize?client_id=" + restApiKey + "&redirect_uri=" + redirectUri
                 + "&response_type=code&scope=talk_message";
         return new RedirectView(url);

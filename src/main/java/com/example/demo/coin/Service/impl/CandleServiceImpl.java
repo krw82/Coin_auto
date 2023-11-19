@@ -33,21 +33,21 @@ public class CandleServiceImpl implements CandleService {
     kakaoApi KakaoApi;
 
     @Override
-    public List<List<CandleVo>> getCandel() {
+    public synchronized List<List<CandleVo>> getCandel(String interval) {
         List<List<CandleVo>> list = new ArrayList<>();
         List<TickerAnalysisVo> clacList = new ArrayList<>();
         try {
             List<TickerVo> tickerList = TickerServic.selectTickerVos();
             for (TickerVo item : tickerList) {
-                List<CandleVo> CandelList = Util.PriceToVo(binanceBc.getCandle(item.getSymbol(), "1h", 200));
-                clacList = this.calcCandle(CandelList, item.getSymbol()); // 산출
+                List<CandleVo> CandelList = Util.PriceToVo(binanceBc.getCandle(item.getSymbol(), interval, 200));
+                clacList = this.calcCandle(CandelList, item.getSymbol(), interval); // 산출
                 this.insertClac(clacList);// 저장
 
             }
-            List<TickerAnalysisVo> calcLsit = CandleMapper.selectcalc();
-            if (clacList.size() != 0) {
-                KakaoApi.sendMessage(kakaoApi.accecs_token, calcLsit);
-            }
+            // List<TickerAnalysisVo> calcLsit = CandleMapper.selectcalc();
+            // if (clacList.size() != 0) {
+            // KakaoApi.sendMessage(kakaoApi.accecs_token, calcLsit);
+            // }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,14 +57,20 @@ public class CandleServiceImpl implements CandleService {
     }
 
     @Override
-    public List<TickerAnalysisVo> calcCandle(List<CandleVo> parma, String symbol) {
-        return Bridge.PythonTa(parma, symbol);
+    public List<TickerAnalysisVo> calcCandle(List<CandleVo> parma, String symbol, String interval) {
+        return Bridge.PythonTa(parma, symbol, interval);
     }
 
     @Override
     public void insertClac(List<TickerAnalysisVo> param) {
+
         CandleMapper.insertCalc(param.get(0));
 
+    }
+
+    @Override
+    public List<TickerAnalysisVo> selectCalcList() {
+        return CandleMapper.selectCalcList();
     }
 
 }

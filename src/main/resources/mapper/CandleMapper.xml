@@ -20,6 +20,7 @@
             ,macdSignal
             ,calc
             ,regdtm
+            ,interval
         )
         VALUES
         (
@@ -38,6 +39,7 @@
         #{macdSignal},
         #{calc}
         ,now()
+        ,#{interval}
         )
     </insert>
 
@@ -50,6 +52,18 @@
 
 
     </select>
+
+    <select id="selectCalcList" resultType="com.example.demo.coin.Vo.TickerAnalysisVo">
+        SELECT
+            *
+        FROM
+            coin_analysis
+        WHERE calc != 0 AND TO_CHAR(regdtm, 'YYYYMMDD') = TO_CHAR(current_date, 'YYYYMMDD');
+
+
+    </select>
+
+
 
 
 </mapper>

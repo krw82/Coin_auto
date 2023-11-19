@@ -24,7 +24,7 @@ public class kakaToken {
             // POST 요청에 필요한 파라미터를 OutputStream으로 넘김
             String paramStr = "grant_type=authorization_code&client_id=" + "e60529beba7c326ce54d1307631d7d7f"
                     + "&redirect_uri="
-                    + "http://localhost:8080/kakao/token2" + "&code=" + authorize_code;
+                    + "http://131.186.30.55/:8080/kakao/token2" + "&code=" + authorize_code;
             OutputStream os = conn.getOutputStream();
             os.write(paramStr.getBytes());
             os.flush();

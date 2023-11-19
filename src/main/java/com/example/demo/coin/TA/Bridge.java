@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 
 public class Bridge {
 
-    public static List<TickerAnalysisVo> PythonTa(List<CandleVo> list, String symbol) {
+    public static List<TickerAnalysisVo> PythonTa(List<CandleVo> list, String symbol, String interval) {
 
         String json = Util.gsonGetInstance().toJson(list);
         List<TickerAnalysisVo> VoList = new ArrayList<TickerAnalysisVo>();
@@ -20,13 +20,13 @@ public class Bridge {
         // "/Users/jeong-woncheol/eclipse-workspace_sec/demo/Coin_auto/venv/bin/python";
         // String pythonPath =
         // "/Users/jeong-woncheol/eclipse-workspace_sec/demo/Coin_auto/venv/bin/python";
-        // //개발
-        String pythonPath = "/home/opc/my_venv/bin/python";
+        // // 개발
+        String pythonPath = "/home/opc/my_venv/bin/python"; // 운영
         // String TaPath = "src/main/java/com/example/demo/coin/TA/BasicTa.py";// 개발
-        String TaPath = "/home/opc/BasicTa.py";
+        String TaPath = "/home/opc/BasicTa.py"; // 운영
 
         String[] command = new String[] { pythonPath, TaPath,
-                json, symbol };
+                json, symbol, interval };
 
         ProcessBuilder processBuilder = new ProcessBuilder(command);
         try {

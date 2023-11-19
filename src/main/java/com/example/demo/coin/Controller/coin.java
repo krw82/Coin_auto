@@ -1,17 +1,20 @@
 package com.example.demo.coin.Controller;
 
 import java.io.IOException;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.coin.Service.CandleService;
 import com.example.demo.coin.Service.TickerServic;
+import com.example.demo.coin.Vo.TickerAnalysisVo;
 import com.example.demo.kakao.kakaoApi;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class coin {
 
@@ -33,11 +36,23 @@ public class coin {
     }
 
     @GetMapping("/calc")
-    public void candles() throws IOException {
+    public void candles(@RequestParam String interval) throws IOException {
         System.out.println("calc Start");
-        CandleService.getCandel();
+        CandleService.getCandel(interval);
         System.out.println("calc End");
         return;
+    }
+
+    @GetMapping("/getAceecs")
+    public void getAceecs() throws IOException {
+        System.out.println(KakaoApi.accecs_token);
+        return;
+    }
+
+    @GetMapping("/getcalc")
+    public List<TickerAnalysisVo> getcalc() throws IOException {
+
+        return CandleService.selectCalcList();
     }
 
 }

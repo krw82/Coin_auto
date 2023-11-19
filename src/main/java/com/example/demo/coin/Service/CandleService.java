@@ -9,10 +9,12 @@ public interface CandleService {
     // 캔들가져와야함.
     // 캔들 산출.
     // 캔들저장.
-    public List<List<CandleVo>> getCandel();
+    public List<List<CandleVo>> getCandel(String interval);
 
-    public List<TickerAnalysisVo> calcCandle(List<CandleVo> param, String param2);
+    public List<TickerAnalysisVo> calcCandle(List<CandleVo> param, String param2, String interval);
 
     public void insertClac(List<TickerAnalysisVo> param);
+
+    public List<TickerAnalysisVo> selectCalcList();
 
 }

@@ -15,6 +15,15 @@ public class TickerAnalysisVo {
     private int candleInverseHammer;
     private int macdSignal;
     private int calc;
+    private String interval;
+
+    public String getInterval() {
+        return interval;
+    }
+
+    public void setInterval(String interval) {
+        this.interval = interval;
+    }
 
     public int getMacdSignal() {
         return macdSignal;

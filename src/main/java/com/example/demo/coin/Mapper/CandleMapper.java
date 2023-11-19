@@ -11,4 +11,6 @@ public interface CandleMapper {
     public void insertCalc(TickerAnalysisVo param);
 
     public List<TickerAnalysisVo> selectcalc();
+
+    public List<TickerAnalysisVo> selectCalcList();
 }

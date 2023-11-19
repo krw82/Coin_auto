@@ -11,11 +11,11 @@ data = json.loads(sys.argv[1])
 #   data = json.load(f)
 
 
-close_prices = np.array([candle["closePrice"] for candle in data])
-high_prices = np.array([candle["highPrice"] for candle in data])
-low_prices = np.array([candle["lowPrice"] for candle in data])
-volume = np.array([candle["volume"] for candle in data])
-open_prices = np.array([candle["openPrice"] for candle in data])
+close_prices = np.array([candle["closePrice"] for candle in data])[:-1]
+high_prices = np.array([candle["highPrice"] for candle in data])[:-1]
+low_prices = np.array([candle["lowPrice"] for candle in data])[:-1]
+volume = np.array([candle["volume"] for candle in data])[:-1]
+open_prices = np.array([candle["openPrice"] for candle in data])[:-1]
 
 
 average_volume = np.mean(volume[-14:])
@@ -228,6 +228,7 @@ results = {
     "candleInverseHammer": candleInverseHammer,
     "macdSignal": macdSignal,
     "calc": calc,
+    "interval": sys.argv[3],
 }
 
 print(json.dumps(results))
