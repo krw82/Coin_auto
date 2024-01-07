@@ -58,7 +58,10 @@
             *
         FROM
             coin_analysis
-        WHERE calc != 0 AND TO_CHAR(regdtm, 'YYYYMMDD') = TO_CHAR(current_date, 'YYYYMMDD');
+        WHERE
+            calc != 0
+            AND TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24') = TO_CHAR(created_at, 'YYYYMMDDHH24')
+
 
 
     </select>
