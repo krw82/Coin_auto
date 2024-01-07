@@ -1,5 +1,8 @@
 package com.example.demo.coin.Vo;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class TickerAnalysisVo {
     private String symbol;
     private int rsiBet;
@@ -16,30 +19,8 @@ public class TickerAnalysisVo {
     private int macdSignal;
     private int calc;
     private String interval;
-
-    public String getInterval() {
-        return interval;
-    }
-
-    public void setInterval(String interval) {
-        this.interval = interval;
-    }
-
-    public int getMacdSignal() {
-        return macdSignal;
-    }
-
-    public void setMacdSignal(int macdSignal) {
-        this.macdSignal = macdSignal;
-    }
-
-    public int getCalc() {
-        return calc;
-    }
-
-    public void setCalc(int calc) {
-        this.calc = calc;
-    }
+    private Date regdtm;
+    private String formatCreate;
 
     public String getSymbol() {
         return symbol;
@@ -135,6 +116,38 @@ public class TickerAnalysisVo {
 
     public void setCandleInverseHammer(int candleInverseHammer) {
         this.candleInverseHammer = candleInverseHammer;
+    }
+
+    public int getMacdSignal() {
+        return macdSignal;
+    }
+
+    public void setMacdSignal(int macdSignal) {
+        this.macdSignal = macdSignal;
+    }
+
+    public int getCalc() {
+        return calc;
+    }
+
+    public void setCalc(int calc) {
+        this.calc = calc;
+    }
+
+    public String getInterval() {
+        return interval;
+    }
+
+    public void setInterval(String interval) {
+        this.interval = interval;
+    }
+
+    public Date getRegdtm() {
+        return regdtm;
+    }
+
+    public void setRegdtm(Date regdtm) {
+        this.regdtm = regdtm;
     }
 
 }

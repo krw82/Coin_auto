@@ -13,14 +13,11 @@ import com.example.demo.coin.Service.TickerServic;
 public class web {
 
     @Autowired
-    TickerServic TickerService;
-
-    @Autowired
     CandleService CandleService;
 
     @GetMapping("/home")
     public String test(Model model) throws IOException {
-        System.out.println("sadsadsadsadasdasd");
+        model.addAttribute("list", CandleService.selectCalcList());
         return "html5up/index";
     }
 

@@ -55,12 +55,30 @@
 
     <select id="selectCalcList" resultType="com.example.demo.coin.Vo.TickerAnalysisVo">
         SELECT
-            *
+            symbol
+            ,rsibet
+            ,mficg
+            ,macrossover_30
+            ,macrossover_180
+            ,macrossunder_30
+            ,macrossunder_180
+            ,candledoji
+            ,cehckdivergence_rsi_14
+            ,cehckdivergence_mfi_14
+            ,candlehammer
+            ,candleinversehammer
+            ,regdtm
+            ,macdsignal
+            ,calc
+            ,created_at
+            ,interval
         FROM
             coin_analysis
         WHERE
             calc != 0
-            AND TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDDHH24') = TO_CHAR(created_at, 'YYYYMMDDHH24')
+            --AND TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDD') = TO_CHAR(created_at, 'YYYYMMDD')
+            AND TO_CHAR(created_at, 'YYYYMMDD') ='20240107'
+        ORDER BY created_at DESC
 
 
 
