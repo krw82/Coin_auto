@@ -86,7 +86,7 @@
           <!-- Featured Post -->
           <article class="post featured">
             <header class="major">
-              <span class="date">April 25, 2017</span>
+              <span class="date" id="current-date">April 25, 2017</span>
               <h2>
                 <a href="#"
                   >공포와 탐욕지수</a
@@ -282,6 +282,21 @@
       <script src="assets/js/breakpoints.min.js"></script>
       <script src="assets/js/util.js"></script>
       <script src="assets/js/main.js"></script>
+
+      <script>
+        // Function to format date as yyyy.mm.dd
+        function getFormattedDate() {
+          var date = new Date();
+          var year = date.getFullYear();
+          var month = String(date.getMonth() + 1).padStart(2, '0'); // Months start at 0
+          var day = String(date.getDate()).padStart(2, '0');
+          return year + '.' + month + '.' + day;
+        }
+
+        // Set the formatted date in the HTML element
+        document.getElementById('current-date').textContent = getFormattedDate();
+      </script>
+
     </body>
   </html>
 </html>
