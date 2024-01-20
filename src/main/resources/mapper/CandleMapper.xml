@@ -77,7 +77,7 @@
         WHERE
             calc != 0
             --AND TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDD') = TO_CHAR(created_at, 'YYYYMMDD')
-            AND TO_CHAR(created_at, 'YYYYMMDD') ='20240107'
+            AND TO_CHAR(created_at, 'YYYYMMDD') =TO_CHAR(now(), 'YYYYMMDD')
         ORDER BY created_at DESC
 
 

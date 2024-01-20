@@ -22,7 +22,7 @@
       <!-- Wrapper -->
       <!--<div id="wrapper" class="fade-in">
          Intro -->
-       <!-- <div id="intro">
+      <!-- <div id="intro">
           <h1>
             This is<br />
             Massively
@@ -45,16 +45,16 @@
           </ul>
         </div>-->
 
-        <!-- Header -->
-        <header id="header">
-          <a href="index.html" class="logo">KRW</a>
-        </header>
+      <!-- Header -->
+      <header id="header">
+        <a href="index.html" class="logo">KRW</a>
+      </header>
 
-        <!-- Nav -->
-        <nav id="nav">
-          <ul class="links">
-            <li class="active"><a href="index.html">KRW</a></li>
-            <!--<li><a href="generic.html">Generic Page</a></li>
+      <!-- Nav -->
+      <nav id="nav">
+        <ul class="links">
+          <li class="active"><a href="index.html">KRW</a></li>
+          <!--<li><a href="generic.html">Generic Page</a></li>
             <li><a href="elements.html">Elements Reference</a></li>
           </ul>
           <ul class="icons">
@@ -78,31 +78,35 @@
                 ><span class="label">GitHub</span></a
               >
             </li>-->
-          </ul>
-        </nav>
+        </ul>
+      </nav>
 
-        <!-- Main -->
-        <div id="main">
-          <!-- Featured Post -->
-          <article class="post featured">
-            <header class="major">
-              <span class="date" id="current-date">April 25, 2017</span>
-              <h2>
-                <a href="#"
-                  >공포와 탐욕지수</a
-                >
-              </h2>
-              <p>
-                Alternative.me의 공포와 탐욕 지수는 암호화폐 시장의 감정과 정서를 분석하여 단일 숫자로 표현합니다.<br />
-                이 지수는 0에서 100까지의 범위로, '극도의 공포'는 0, '극도의 탐욕'은 100을 의미합니다.<br />
-				암호화폐 시장이 감정에 크게 영향을 받기 때문에,<br />
-                이 지수는 투자자들의 공포 또는 탐욕의 정도를 나타내어 시장의 현재 정서를 이해하는 데 도움을 줍니다.
-              </p>
-            </header>
-            <a href="#" class="image main"
-              ><img src="https://alternative.me/crypto/fear-and-greed-index.png" alt="Latest Crypto Fear & Greed Index" />
+      <!-- Main -->
+      <div id="main">
+        <!-- Featured Post -->
+        <article class="post featured">
+          <header class="major">
+            <span class="date" id="current-date">April 25, 2017</span>
+            <h2>
+              <a href="#">공포와 탐욕지수</a>
+            </h2>
+            <p>
+              Alternative.me의 공포와 탐욕 지수는 암호화폐 시장의 감정과 정서를
+              분석하여 단일 숫자로 표현합니다.<br />
+              이 지수는 0에서 100까지의 범위로, '극도의 공포'는 0, '극도의
+              탐욕'은 100을 의미합니다.<br />
+              암호화폐 시장이 감정에 크게 영향을 받기 때문에,<br />
+              이 지수는 투자자들의 공포 또는 탐욕의 정도를 나타내어 시장의 현재
+              정서를 이해하는 데 도움을 줍니다.
+            </p>
+          </header>
+          <a href="#" class="image main"
+            ><img
+              src="https://alternative.me/crypto/fear-and-greed-index.png"
+              alt="Latest Crypto Fear & Greed Index"
+            />
 
-              <!--<div class="tradingview-widget-container">
+            <!--<div class="tradingview-widget-container">
                 <div class="tradingview-widget-container__widget"></div>
                 <script type="text/javascript">
                   new TradingView.widget(
@@ -127,83 +131,97 @@
                 </script>
               </div>
               </div>-->
+          </a>
+          <ul class="actions special">
+            <li>
+              <a
+                href="https://alternative.me/crypto/fear-and-greed-index/"
+                class="button large"
+                >이동하기</a
+              >
+            </li>
+          </ul>
+        </article>
 
-            </a>
-            <ul class="actions special">
-              <li><a href="https://alternative.me/crypto/fear-and-greed-index/" class="button large">이동하기</a></li>
-            </ul>
-          </article>
+        <!-- Posts -->
 
-          <!-- Posts -->
           <section class="posts">
-			<th:block th:each="item : ${list}">
-				<article>
-				<header>
-					<span th:text="${#dates.format(item.regdtm, 'HH')} + '시'"></span>
-					<h2>
-					<a href="#" th:text="${item.symbol}"
-						>symbol</a
-					>
-					</h2>
-				</header>
-        <div class="image fit">
-         <!-- TradingView Widget BEGIN
-<div class="tradingview-widget-container" style="height:100%;width:100%">
-  <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-  {
-  "autosize": true,
-  "symbol": "BINANCE:[[${item.symbol}]]",
-  "interval": "15",
-  "timezone": "Etc/UTC",
-  "theme": "light",
-  "style": "1",
-  "locale": "kr",
-  "enable_publishing": false,
-  "hide_top_toolbar": false,
-  "hide_legend": true,
-  "save_image": false,
-  "hide_volume": false,
-  "support_host": "https://www.tradingview.com"
-}
-  </script>
+            <th:block th:each="item : ${list}">
+              <article>
+                <header>
+                  <span
+                    th:text="${#dates.format(item.regdtm, 'HH')} + '시'"
+                  ></span>
+                  <h2>
+                    <a href="#" th:text="${item.symbol}">symbol</a>
+                  </h2>
+                </header>
+                <div class="image fit">
+                  <!-- TradingView Widget BEGIN-->
+                  <div
+                    class="tradingview-widget-container"
+                    style="height: 100%; width: 100%"
+                  >
+                    <div
+                      class="tradingview-widget-container__widget"
+                      style="height: calc(100% - 32px); width: 100%"
+                    ></div>
+                    <script
+                      type="text/javascript"
+                      src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
+                      async
+                    >
+                        {
+                        "autosize": true,
+                        "symbol": "BINANCE:[[${item.symbol}]]",
+                        "interval": "15",
+                        "timezone": "Asia/Seoul",
+                        "theme": "light",
+                        "style": "1",
+                        "locale": "kr",
+                        "enable_publishing": false,
+                        "hide_top_toolbar": false,
+                        "hide_legend": true,
+                        "save_image": false,
+                        "hide_volume": false,
+                        "support_host": "https://www.tradingview.com"
+                      }
+                    </script>
+                  </div>
+                  <!--TradingView Widget END -->
+                </div>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5181369438957691"
-crossorigin="anonymous"></script>
-<ins class="adsbygoogle"
-style="display:block"
-data-ad-format="fluid"
-data-ad-layout-key="-6t+ed+2i-1n-4w"
-data-ad-client="ca-pub-5181369438957691"
-data-ad-slot="7076457890"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
-</div>
- TradingView Widget END -->
- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5181369438957691"
-     crossorigin="anonymous"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-6t+ed+2i-1n-4w"
-     data-ad-client="ca-pub-5181369438957691"
-     data-ad-slot="7076457890"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-            </div>
-
-				<ul class="actions special">
-					<li><a href="#" class="button"
-                  th:text="${item.calc == 1} ? 'Buy' : 'Sell'">
-                  Default Text
-              </a>
-          </li>
-				</ul>
-				</article>
-			</th:block>
+                <ul class="actions special">
+                  <li>
+                    <a
+                      href="#"
+                      class="button"
+                      th:text="${item.calc == 1} ? 'Buy' : 'Sell'"
+                    >
+                      Default Text
+                    </a>
+                  </li>
+                </ul>
+              </article>
+              <article>
+                <script
+                  async
+                  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5181369438957691"
+                  crossorigin="anonymous"
+                ></script>
+                <ins
+                  class="adsbygoogle"
+                  style="display: block"
+                  data-ad-format="fluid"
+                  data-ad-layout-key="-6t+ed+2i-1n-4w"
+                  data-ad-client="ca-pub-5181369438957691"
+                  data-ad-slot="7076457890"
+                ></ins>
+                <script>
+                  (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+              </article>
+            </th:block>
           </section>
 
           <!-- Footer -->
@@ -259,7 +277,7 @@ data-ad-slot="7076457890"></ins>
             </section>-->
             <section>
               <h3>Email</h3>
-              <p><a href="#">info@untitled.tld</a></p>
+              <p><a href="#">dnjscjf0220@naver.com</a></p>
             </section>
             <!--<section>
               <h3>Social</h3>
@@ -292,7 +310,7 @@ data-ad-slot="7076457890"></ins>
         <!-- Copyright -->
         <div id="copyright">
           <ul>
-            <li>&copy; Untitled</li>
+            <li>&copy; KRW</li>
             <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
           </ul>
         </div>
@@ -312,15 +330,15 @@ data-ad-slot="7076457890"></ins>
         function getFormattedDate() {
           var date = new Date();
           var year = date.getFullYear();
-          var month = String(date.getMonth() + 1).padStart(2, '0'); // Months start at 0
-          var day = String(date.getDate()).padStart(2, '0');
-          return year + '.' + month + '.' + day;
+          var month = String(date.getMonth() + 1).padStart(2, "0"); // Months start at 0
+          var day = String(date.getDate()).padStart(2, "0");
+          return year + "." + month + "." + day;
         }
 
         // Set the formatted date in the HTML element
-        document.getElementById('current-date').textContent = getFormattedDate();
+        document.getElementById("current-date").textContent =
+          getFormattedDate();
       </script>
-
     </body>
   </html>
 </html>
