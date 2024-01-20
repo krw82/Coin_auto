@@ -21,4 +21,10 @@ public class web {
         return "html5up/index";
     }
 
+    @GetMapping("/")
+    public String tes2(Model model) throws IOException {
+        model.addAttribute("list", CandleService.selectCalcList());
+        return "html5up/index";
+    }
+
 }
