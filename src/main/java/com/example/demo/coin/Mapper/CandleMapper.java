@@ -1,6 +1,7 @@
 package com.example.demo.coin.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,5 +13,5 @@ public interface CandleMapper {
 
     public List<TickerAnalysisVo> selectcalc();
 
-    public List<TickerAnalysisVo> selectCalcList();
+    public List<TickerAnalysisVo> selectCalcList(Map<String, Object> params);
 }

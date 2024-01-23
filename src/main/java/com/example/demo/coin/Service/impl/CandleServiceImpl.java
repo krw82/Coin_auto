@@ -2,6 +2,7 @@ package com.example.demo.coin.Service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import com.example.demo.coin.Vo.TickerAnalysisVo;
 import com.example.demo.coin.Vo.TickerVo;
 import com.example.demo.coin.comm.Util;
 import com.example.demo.kakao.kakaoApi;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class CandleServiceImpl implements CandleService {
@@ -36,19 +39,19 @@ public class CandleServiceImpl implements CandleService {
     public synchronized List<List<CandleVo>> getCandel(String interval) {
         List<List<CandleVo>> list = new ArrayList<>();
         List<TickerAnalysisVo> clacList = new ArrayList<>();
+        List<CandleVo> CandelList = null;
         try {
             List<TickerVo> tickerList = TickerServic.selectTickerVos();
             for (TickerVo item : tickerList) {
-                List<CandleVo> CandelList = Util.PriceToVo(binanceBc.getCandle(item.getSymbol(), interval, 200));
+                if (false) {
+                    // 여기에 200개가 안될경우 del insert ? merge?
+                    Util.PriceToVo(binanceBc.getCandle(item.getSymbol(), interval, 200));
+                } else {
+                    CandelList = Util.PriceToVo(binanceBc.getCandle(item.getSymbol(), interval, 1));
+                }
                 clacList = this.calcCandle(CandelList, item.getSymbol(), interval); // 산출
                 this.insertClac(clacList);// 저장
-
             }
-            // List<TickerAnalysisVo> calcLsit = CandleMapper.selectcalc();
-            // if (clacList.size() != 0) {
-            // KakaoApi.sendMessage(kakaoApi.accecs_token, calcLsit);
-            // }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,8 +72,17 @@ public class CandleServiceImpl implements CandleService {
     }
 
     @Override
-    public List<TickerAnalysisVo> selectCalcList() {
-        return CandleMapper.selectCalcList();
+    public List<TickerAnalysisVo> selectCalcList(String params) {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> parsedMap = null;
+
+        try {
+            parsedMap = mapper.readValue(params, new TypeReference<Map<String, Object>>() {
+            });
+        } catch (Exception e) {
+            // 에러처리
+        }
+        return CandleMapper.selectCalcList(parsedMap);
     }
 
 }

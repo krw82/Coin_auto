@@ -49,10 +49,4 @@ public class coin {
         return;
     }
 
-    @GetMapping("/getcalc")
-    public List<TickerAnalysisVo> getcalc() throws IOException {
-
-        return CandleService.selectCalcList();
-    }
-
 }

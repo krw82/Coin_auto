@@ -53,7 +53,7 @@
 
     </select>
 
-    <select id="selectCalcList" resultType="com.example.demo.coin.Vo.TickerAnalysisVo">
+    <select id="selectCalcList" resultType="com.example.demo.coin.Vo.TickerAnalysisVo" parameterType="HashMap">
         SELECT
             symbol
             ,rsibet
@@ -78,6 +78,7 @@
             calc != 0
             --AND TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDD') = TO_CHAR(created_at, 'YYYYMMDD')
             AND TO_CHAR(created_at, 'YYYYMMDD') =TO_CHAR(now(), 'YYYYMMDD')
+            AND interval = #{interval}
         ORDER BY created_at DESC
 
 

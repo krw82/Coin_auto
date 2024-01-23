@@ -14,7 +14,7 @@ public class CoinAutoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CoinAutoApplication.class, args);
-		// 파일테스트
+
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.example.demo.coin.Service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.example.demo.coin.Vo.CandleVo;
 import com.example.demo.coin.Vo.TickerAnalysisVo;
@@ -15,6 +16,6 @@ public interface CandleService {
 
     public void insertClac(List<TickerAnalysisVo> param);
 
-    public List<TickerAnalysisVo> selectCalcList();
+    public List<TickerAnalysisVo> selectCalcList(String params);
 
 }
