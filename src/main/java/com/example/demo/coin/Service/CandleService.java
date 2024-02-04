@@ -16,6 +16,8 @@ public interface CandleService {
 
     public void insertClac(List<TickerAnalysisVo> param);
 
-    public List<TickerAnalysisVo> selectCalcList(String params);
+    public List<TickerAnalysisVo> selectCalcList(Map<String, Object> params);
+
+    public Map<String, Object> selectCoinDetail(Map<String, Object> params);
 
 }

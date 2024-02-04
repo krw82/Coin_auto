@@ -1,9 +1,11 @@
 package com.example.demo.coin.Service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.python.antlr.PythonParser.decorator_return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,17 +74,14 @@ public class CandleServiceImpl implements CandleService {
     }
 
     @Override
-    public List<TickerAnalysisVo> selectCalcList(String params) {
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> parsedMap = null;
+    public List<TickerAnalysisVo> selectCalcList(Map<String, Object> params) {
+        return CandleMapper.selectCalcList(params);
+    }
 
-        try {
-            parsedMap = mapper.readValue(params, new TypeReference<Map<String, Object>>() {
-            });
-        } catch (Exception e) {
-            // 에러처리
-        }
-        return CandleMapper.selectCalcList(parsedMap);
+    @Override
+    public Map<String, Object> selectCoinDetail(Map<String, Object> params) {
+
+        throw new UnsupportedOperationException("Unimplemented method 'selectCoinDetail'");
     }
 
 }

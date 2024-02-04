@@ -1,6 +1,8 @@
 package com.example.demo.coin.Controller;
 
 import java.io.IOException;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.stereotype.Controller;
@@ -20,9 +22,15 @@ public class web {
     CandleService CandleService;
 
     @GetMapping("/")
-    public String tes2(Model model, @RequestParam String params) throws IOException {
-        model.addAttribute("list", CandleService.selectCalcList(params));
+    public String tes2(Model model, @RequestParam Map<String, Object> interval) throws IOException {
+        model.addAttribute("list", CandleService.selectCalcList(interval));
         return "html5up/index";
+    }
+
+    @GetMapping("/detail")
+    public String test2(Model model, @RequestParam Map<String, Object> params) throws IOException {
+        model.addAttribute("list", CandleService.selectCalcList(params));
+        return "html5up/detail";
     }
 
 }
