@@ -196,7 +196,7 @@
                 <ul class="actions special">
                   <li>
                     <a
-                      href="#"
+                      th:href="@{/detail(params=${item.symbol})}"
                       class="button"
                       th:text="${item.calc == 1} ? 'Buy' : 'Sell'"
                     >
