@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.coin.Service.CandleService;
 import com.example.demo.coin.Service.TickerServic;
 import com.example.demo.coin.Vo.TickerAnalysisVo;
-import com.example.demo.kakao.kakaoApi;
 
 @RestController
 @RequestMapping("/api")
@@ -23,9 +22,6 @@ public class coin {
 
     @Autowired
     CandleService CandleService;
-
-    @Autowired
-    kakaoApi KakaoApi;
 
     @GetMapping("/ticker")
     public void test() throws IOException {
@@ -40,12 +36,6 @@ public class coin {
         System.out.println("calc Start");
         CandleService.getCandel(interval);
         System.out.println("calc End");
-        return;
-    }
-
-    @GetMapping("/getAceecs")
-    public void getAceecs() throws IOException {
-        System.out.println(KakaoApi.accecs_token);
         return;
     }
 

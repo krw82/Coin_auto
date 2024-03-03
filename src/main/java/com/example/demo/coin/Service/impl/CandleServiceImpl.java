@@ -1,11 +1,10 @@
 package com.example.demo.coin.Service.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
-import org.python.antlr.PythonParser.decorator_return;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +17,6 @@ import com.example.demo.coin.Vo.CandleVo;
 import com.example.demo.coin.Vo.TickerAnalysisVo;
 import com.example.demo.coin.Vo.TickerVo;
 import com.example.demo.coin.comm.Util;
-import com.example.demo.kakao.kakaoApi;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class CandleServiceImpl implements CandleService {
@@ -33,9 +29,6 @@ public class CandleServiceImpl implements CandleService {
 
     @Autowired
     CandleMapper CandleMapper;
-
-    @Autowired
-    kakaoApi KakaoApi;
 
     @Override
     public synchronized List<List<CandleVo>> getCandel(String interval) {
