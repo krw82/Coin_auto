@@ -14,4 +14,6 @@ public interface CandleMapper {
     public List<TickerAnalysisVo> selectcalc();
 
     public List<TickerAnalysisVo> selectCalcList(Map<String, Object> params);
+
+    public List<TickerAnalysisVo> selectCoinDetail(Map<String, Object> params);
 }

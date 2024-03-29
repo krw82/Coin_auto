@@ -72,9 +72,9 @@ public class CandleServiceImpl implements CandleService {
     }
 
     @Override
-    public Map<String, Object> selectCoinDetail(Map<String, Object> params) {
+    public List<TickerAnalysisVo> selectCoinDetail(Map<String, Object> params) {
 
-        throw new UnsupportedOperationException("Unimplemented method 'selectCoinDetail'");
+        return CandleMapper.selectCoinDetail(params);
     }
 
 }

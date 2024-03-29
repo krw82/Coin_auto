@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.coin.Vo.CandleVo;
 import com.example.demo.coin.Vo.TickerVo;
-import com.example.demo.kakao.KakaoAccessTokenResponse;
 import com.google.gson.Gson;
 
 @Component
@@ -111,15 +110,6 @@ public class Util {
 
 		// Return only the top 10
 		return filteredList;
-
-	}
-
-	public static KakaoAccessTokenResponse kakaoVo(String json) throws IOException {
-
-		KakaoAccessTokenResponse result = gson.fromJson(json, KakaoAccessTokenResponse.class);
-
-		// list.sort(Comparator.comparingLong(CandleVo::getKlineOpenTime).reversed());
-		return result;
 
 	}
 

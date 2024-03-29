@@ -80,9 +80,32 @@
             AND TO_CHAR(created_at, 'YYYYMMDD') =TO_CHAR(now(), 'YYYYMMDD')
             AND interval = #{interval}
         ORDER BY created_at DESC
+    </select>
 
-
-
+      <select id="selectCoinDetail" resultType="com.example.demo.coin.Vo.TickerAnalysisVo" parameterType="HashMap">
+        SELECT
+            symbol
+            ,rsibet
+            ,mficg
+            ,macrossover_30
+            ,macrossover_180
+            ,macrossunder_30
+            ,macrossunder_180
+            ,candledoji
+            ,cehckdivergence_rsi_14
+            ,cehckdivergence_mfi_14
+            ,candlehammer
+            ,candleinversehammer
+            ,regdtm
+            ,macdsignal
+            ,calc
+            ,created_at
+            ,interval
+        FROM
+            coin_analysis
+        WHERE calc != 0
+            AND symbol = #{params}
+        ORDER BY created_at DESC
     </select>
 
 

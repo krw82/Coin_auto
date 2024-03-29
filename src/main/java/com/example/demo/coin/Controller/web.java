@@ -29,7 +29,7 @@ public class web {
 
     @GetMapping("/detail")
     public String test2(Model model, @RequestParam Map<String, Object> params) throws IOException {
-        model.addAttribute("list", CandleService.selectCalcList(params));
+        model.addAttribute("vo", CandleService.selectCoinDetail(params));
         return "html5up/detail";
     }
 

@@ -18,6 +18,6 @@ public interface CandleService {
 
     public List<TickerAnalysisVo> selectCalcList(Map<String, Object> params);
 
-    public Map<String, Object> selectCoinDetail(Map<String, Object> params);
+    public List<TickerAnalysisVo> selectCoinDetail(Map<String, Object> params);
 
 }
