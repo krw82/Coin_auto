@@ -10,8 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.BinanceService.ticker.Vo.TickerVo;
 import com.example.demo.coin.Vo.CandleVo;
-import com.example.demo.coin.Vo.TickerVo;
+
 import com.google.gson.Gson;
 
 @Component

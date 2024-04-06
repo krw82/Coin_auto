@@ -24,7 +24,7 @@
     delete from coin_ticker;
     </delete>
 
-     <select id="selectTickerVos" resultType="com.example.demo.coin.Vo.TickerVo">
+     <select id="selectTickerVos" resultType="com.example.demo.BinanceService.ticker.Vo.TickerVo">
         SELECT
             symbol
         FROM

@@ -5,13 +5,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.coin.Service.CandleService;
-import com.example.demo.coin.Service.TickerServic;
 
 @Component
 public class scheduledTasks {
-
-    @Autowired
-    TickerServic TickerService;
 
     @Autowired
     CandleService CandleService;
@@ -25,7 +21,7 @@ public class scheduledTasks {
 
     @Scheduled(cron = "0 50 8 * * ?") // 매일 8시 50분 실행
     public void dailyTaskAtEightFifty() {
-        TickerService.insertTicker();
+        // TickerService.insertTicker();
 
     }
 

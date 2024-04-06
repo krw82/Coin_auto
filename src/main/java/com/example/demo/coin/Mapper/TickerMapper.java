@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.demo.coin.Vo.TickerVo;
+import com.example.demo.BinanceService.ticker.Vo.TickerVo;
 
 @Mapper
 public interface TickerMapper {

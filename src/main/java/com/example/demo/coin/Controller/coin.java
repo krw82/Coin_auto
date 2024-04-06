@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.coin.Service.CandleService;
-import com.example.demo.coin.Service.TickerServic;
+
 import com.example.demo.coin.Vo.TickerAnalysisVo;
 
 @RestController
@@ -18,15 +18,12 @@ import com.example.demo.coin.Vo.TickerAnalysisVo;
 public class coin {
 
     @Autowired
-    TickerServic TickerService;
-
-    @Autowired
     CandleService CandleService;
 
     @GetMapping("/ticker")
     public void test() throws IOException {
 
-        TickerService.insertTicker();
+        // TickerService.insertTicker();
 
         return;
     }
