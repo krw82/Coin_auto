@@ -33,8 +33,14 @@ public class TickerServiceImpl implements TickerService {
     public void insertTicker() {
 
         try {
-            List<TickerEntity> list = getApiTicker();
-            tickerRepository.saveAll(list);
+            List<TickerVo> list = getApiTicker();
+            List<TickerEntity> entities = new ArrayList<>();
+            // ModelMapper를 사용하여 VO 리스트를 Entity 리스트로 변환
+            for (TickerVo vo : list) {
+                TickerEntity entity = modelMapper.map(vo, TickerEntity.class);
+                entities.add(entity);
+            }
+            tickerRepository.saveAll(entities);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,23 +53,19 @@ public class TickerServiceImpl implements TickerService {
     }
 
     @Override
-    public List<TickerEntity> getApiTicker() {
-        List<TickerEntity> list = new ArrayList<>();
+    public List<TickerVo> getApiTicker() {
+        List<TickerVo> voList = new ArrayList<>();
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            List<TickerVo> voList = objectMapper.readValue(binanceApi.getMarcketTicker(),
+            voList = objectMapper.readValue(binanceApi.getMarcketTicker(),
                     new TypeReference<List<TickerVo>>() {
                     });
-            // ModelMapper를 사용하여 VO 리스트를 Entity 리스트로 변환
-            for (TickerVo vo : voList) {
-                TickerEntity entity = modelMapper.map(vo, TickerEntity.class);
-                list.add(entity);
-            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return list;
+        return voList;
     }
 
 }

@@ -1,0 +1,231 @@
+//@version=5
+indicator(title="function", overlay=true)
+
+average_volume = ta.sma(volume, 14)
+current_volume = volume
+
+//다이버전스 체크
+diverCheck(lowest_array,highest_array,div_round) =>
+    lowest_price = ta.lowest(close, div_round)
+    highest_price = ta.highest(close, div_round)
+    bullishDivergence = lowest_price < lowest_price[1] and lowest_array > lowest_array[1]
+    bearishDivergence = highest_price > highest_price[1] and highest_array < highest_array[1]
+    [bullishDivergence, bearishDivergence]
+
+
+// Function to calculate RSI bet
+rsi_bet_func() =>
+    rsi_bet = ta.rsi(close, 7) / ta.rsi(close, 14)
+    rsi_bet_Sell = rsi_bet > 1.2 and ta.rsi(close, 7) > 70
+    rsi_bet_Buy = rsi_bet < 0.8 and ta.rsi(close, 7) < 30
+    [rsi_bet_Buy, rsi_bet_Sell]
+
+// Function to calculate MFI bet
+mfi_bet_func() =>
+    mfi = ta.mfi(hlc3, 14)
+    mfi_bet_Sell = mfi > 90
+    mfi_bet_Buy = mfi < 10
+    [mfi_bet_Buy, mfi_bet_Sell]
+
+// Function to check if price crosses moving average
+cross_ma_func(ma_length) =>
+    ma = ta.sma(close, ma_length)
+    cross_up = false
+    cross_down = false
+    if ta.crossover(high, ma)
+        if close>ma
+            cross_up := true
+        else
+            cross_down := true
+    [cross_up, cross_down]
+
+candle_Doji(rsi_low,rsi_high) =>
+    Doji_buy = false
+    Doji_sell =false
+
+    if ta.rsi(close, 14) <= rsi_low and math.abs(close - open) <= (high - low) * 0.1 and current_volume > average_volume * 1.1
+        Doji_buy :=true
+    if ta.rsi(close, 14) >= rsi_high and math.abs(close - open) <= (high - low) * 0.1 and current_volume > average_volume * 1.1
+        Doji_sell :=true
+
+    [Doji_buy,Doji_sell]
+
+// Function to check for bullish or bearish divergence
+divergence_func(rsi_length, mfi_length) =>
+
+    lowest_rsi = ta.lowest(ta.rsi(close, 14), 70)
+
+    lowest_mfi = ta.lowest(ta.mfi(hlc3, 14), 70)
+
+    highest_rsi = ta.highest(ta.rsi(close, 14), 70)
+
+    highest_mfi = ta.lowest(ta.mfi(hlc3, 14), 70)
+
+    [bullish_divergence,bearish_divergence]= diverCheck(lowest_rsi,highest_rsi,70)
+    [bullish_divergence_mfi,bearish_divergence_mfi]= diverCheck(lowest_mfi,highest_mfi,70)
+
+
+    [bullish_divergence, bullish_divergence_mfi, bearish_divergence, bearish_divergence_mfi]
+
+// Function to check if price crosses moving average
+macdDivergenceWithSignalCross(macdSource ,macdShort ,macdLong ,macdSignal ) =>
+
+
+    [macdLine, signalLine, _] = ta.macd(macdSource, macdShort, macdLong, macdSignal)
+    [bullishDivergence, bearishDivergence] = diverCheck(ta.lowest(macdLine, 70),ta.highest(macdLine, 70),70)
+
+
+    macdCrossAboveSignal = ta.crossover(macdLine, signalLine)
+    macdCrossBelowSignal = ta.crossunder(macdLine, signalLine)
+
+    [bullishDivergence, bearishDivergence,macdCrossAboveSignal,macdCrossBelowSignal]
+
+isHammer(c, o, h, l) =>
+    bodyHeight = math.abs(c - o)
+    upperShadow = h - math.max(o, c)
+    lowerShadow = math.min(o, c) - l
+
+    calc = false
+
+    if close * 0.002 < lowerShadow and current_volume > average_volume * 2
+        calc := true
+
+    [calc]
+
+
+isInvertedHammer(c, o, h, l) =>
+    bodyHeight = math.abs(c - o)
+    upperShadow = h - math.max(o, c)
+    lowerShadow = math.min(o, c) - l
+
+    calc = false
+
+    if close * 0.002 < upperShadow and current_volume > average_volume * 2
+        calc := true
+
+    [calc]
+
+
+
+// Function to calculate key value
+calculate_key() =>
+    key = 5.0
+    text_123 = ""
+
+    [rsi_bet_Buy, rsi_bet_Sell] = rsi_bet_func()
+    [mfi_bet_Buy, mfi_bet_Sell] = mfi_bet_func()
+    [close_up, close_down] = cross_ma_func(30)
+    [candle_touch_buy, candle_touch_sell] = cross_ma_func(180)
+    [bullish_divergence, bullish_divergence_mfi, bearish_divergence, bearish_divergence_mfi] = divergence_func( 14, 14)
+    [Doji_buy,Doji_sell] = candle_Doji( 30, 70)
+    [bullishDivergence_macd, bearishDivergence_macd,macdCrossAboveSignal,macdCrossBelowSignal] = macdDivergenceWithSignalCross(close,8,17,9)
+    [hammer] = isHammer(close,open,high,low)
+    [Inhammer] = isInvertedHammer(close,open,high,low)
+    if rsi_bet_Sell
+        key -= 1
+        text_123 += "rsi_bet_Sell "
+    if rsi_bet_Buy
+        key += 1
+        text_123 += "rsi_bet_Buy "
+    if mfi_bet_Sell
+        key -= 1
+        text_123 +="mfi_bet_Sell "
+    if mfi_bet_Buy
+        key += 1
+        text_123 +="mfi_bet_Buy "
+    if close_up
+        key += 1
+        text_123 +="close_up "
+    if close_down
+        key -= 1
+        text_123 +="close_down "
+    if candle_touch_sell
+        key -= 1
+        text_123 +="candle_touch_sell "
+    if candle_touch_buy
+        key += 1
+        text_123 +="candle_touch_buy "
+    if bullish_divergence and current_volume > average_volume * 1.2
+        key += 1
+        text_123 +="bullish_divergence "
+    if bullish_divergence_mfi and current_volume > average_volume * 1.2
+        key += 1
+        text_123 +="bullish_divergence_mfi "
+    if bearish_divergence and current_volume > average_volume * 1.2
+        key -= 1
+        text_123 +="bearish_divergence "
+    if bearish_divergence_mfi and current_volume > average_volume * 1.2
+        key -= 1
+        text_123 +="bearish_divergence_mfi "
+
+
+    if Doji_buy
+        key +=1
+        text_123 +="Doji_buy "
+    if Doji_sell
+        key -= 2
+        text_123 +="Doji_sell "
+
+    if bullishDivergence_macd
+        key +=1
+        text_123 +="bullishDivergence_macd "
+
+    if bearishDivergence_macd
+        key -= 1
+        text_123 +="bearishDivergence_macd "
+
+    if macdCrossAboveSignal
+        key +=1
+        text_123 +="macdCrossAboveSignal "
+
+    if macdCrossBelowSignal
+        key -= 1
+        text_123 +="macdCrossBelowSignal "
+
+    if hammer
+        key += 1
+        text_123 +="hammer "
+
+    if Inhammer
+        key -= 1
+        text_123 +="Inhammer "
+
+
+    if current_volume>average_volume*2
+        if key>5
+            key +=1
+            text_123 +="current_volume_BUY "
+        else if key<5
+            key -=1
+            text_123 +="current_volume_SELL "
+
+
+
+    [key,text_123]
+
+
+// Function to determine buy or sell signal
+determine_signal(key, bearish_divergence, bearish_divergence_mfi,close_down,candle_touch_sell,Doji_sell) =>
+    buy = key >= 8
+    sell = key <= 2 or bearish_divergence  or bearish_divergence_mfi //or  Doji_sell //or close_down or candle_touch_sell
+    [buy, sell]
+
+// Call functions to calculate values
+
+[bullish_divergence, bullish_divergence_mfi, bearish_divergence, bearish_divergence_mfi] = divergence_func( 14, 14)
+[close_up, close_down] = cross_ma_func(30)
+[candle_touch_buy, candle_touch_sell] = cross_ma_func(180)
+[Doji_buy,Doji_sell] = candle_Doji(30,70)
+
+[key,text_123] = calculate_key()
+[buy, sell] = determine_signal(key, bearish_divergence, bearish_divergence_mfi,close_down,candle_touch_sell,Doji_sell)
+
+// Plot shapes based on signals
+plotshape(buy, style=shape.triangleup, location=location.belowbar, color=color.red, size=size.tiny )
+//if(buy)
+    //label.new(bar_index, high, text=text_123, color=color.red, textcolor=color.blue)
+plotshape(sell, style=shape.triangledown, location=location.abovebar, color=color.blue, size=size.tiny )
+//if(sell)
+    //label.new(bar_index, high, text=text_123, color=color.blue, textcolor=color.red)
+
+
