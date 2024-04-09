@@ -11,10 +11,12 @@ public interface CandleService {
 
     public List<CandleVo> getApiCandle(String symbol, String interval);
 
-    public List<AnalysisVo> calcCandle(List<CandleVo> param, String param2, String interval);
+    public void calcCandle(String interval);
 
     public void insertClac(List<AnalysisVo> param);
 
     public List<AnalysisVo> selectCalcList(Map<String, Object> params);
+
+    public List<AnalysisVo> sendApiPythonClac(List<CandleVo> params);
 
 }

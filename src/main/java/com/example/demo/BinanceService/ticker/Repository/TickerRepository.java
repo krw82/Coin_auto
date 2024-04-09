@@ -9,4 +9,6 @@ import com.example.demo.BinanceService.ticker.Entity.TickerEntity;
 public interface TickerRepository extends JpaRepository<TickerEntity, String> {
     List<TickerEntity> findBySymbol(String symbol);
 
+    List<TickerEntity> findTop40ByOrderByVolumeDesc();
+
 }
