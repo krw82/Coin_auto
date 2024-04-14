@@ -1,15 +1,17 @@
 package com.example.demo.BinanceService.TA;
 
-import org.python.antlr.PythonParser.return_stmt_return;
 import org.ta4j.core.BarSeries;
-import org.ta4j.core.Indicator;
+
 import org.ta4j.core.indicators.CachedIndicator;
 import org.ta4j.core.indicators.EMAIndicator;
 import org.ta4j.core.indicators.MACDIndicator;
 import org.ta4j.core.indicators.RSIIndicator;
+import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 import org.ta4j.core.indicators.helpers.HighestValueIndicator;
 import org.ta4j.core.indicators.helpers.LowestValueIndicator;
 import org.ta4j.core.num.Num;
+import org.ta4j.core.rules.CrossedDownIndicatorRule;
+import org.ta4j.core.rules.CrossedUpIndicatorRule;
 
 public class TaUtil {
 
@@ -97,29 +99,30 @@ public class TaUtil {
         return 0;
     }
 
-    public int checkDivergence(CachedIndicator<Num> indicator1, CachedIndicator<Num> indicator2, int index) {
+    private int checkDivergence(CachedIndicator<Num> indicator1, CachedIndicator<Num> indicator2, int index,
+            int barCount) {
         // 1이 최저인데 2는 아닐때 다이버전스 발동.
         LowestValueIndicator lowestIndicator1 = new LowestValueIndicator(indicator1,
-                indicator1.getBarSeries().getBarCount());
+                barCount);
         LowestValueIndicator lowestIndicator2 = new LowestValueIndicator(indicator2,
-                indicator2.getBarSeries().getBarCount());
+                barCount);
         HighestValueIndicator highestIndicator1 = new HighestValueIndicator(indicator1,
-                indicator1.getBarSeries().getBarCount());
+                barCount);
         HighestValueIndicator highestIndicator2 = new HighestValueIndicator(indicator1,
-                indicator1.getBarSeries().getBarCount());
+                barCount);
 
-        int lowestIndicator1Index = this.getValueIndex(lowestIndicator1, lowestIndicator1.getValue(0));
-        int lowestIndicator2Index = this.getValueIndex(lowestIndicator2, lowestIndicator2.getValue(0));
-        int highestIndicator1Index = this.getValueIndex(highestIndicator1, highestIndicator1.getValue(0));
-        int highestIndicator2Index = this.getValueIndex(highestIndicator2, highestIndicator2.getValue(0));
+        int lowestIndicator1Index = this.getValueIndex(lowestIndicator1, lowestIndicator1.getValue(index));
+        int lowestIndicator2Index = this.getValueIndex(lowestIndicator2, lowestIndicator2.getValue(index));
+        int highestIndicator1Index = this.getValueIndex(highestIndicator1, highestIndicator1.getValue(index));
+        int highestIndicator2Index = this.getValueIndex(highestIndicator2, highestIndicator2.getValue(index));
 
         if (lowestIndicator1Index != lowestIndicator2Index
-                && lowestIndicator1.getValue(index).isEqual(indicator1.getValue(0))) {
+                && lowestIndicator1.getValue(index).isEqual(indicator1.getValue(index))) {
             return 1;
         }
 
         if (highestIndicator1Index != highestIndicator2Index
-                && highestIndicator1.getValue(index).isEqual(indicator1.getValue(0))) {
+                && highestIndicator1.getValue(index).isEqual(indicator1.getValue(index))) {
             return -1;
         }
 
@@ -136,19 +139,40 @@ public class TaUtil {
         return -1;
     }
 
-    public int Macd(MACDIndicator macd, EMAIndicator signalEma, int index) {
+    public int Macd(BarSeries series, int index) {
+
+        // Initialize indicators
+        ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
+        MACDIndicator macd = new MACDIndicator(closePrice, 12, 26);
+        EMAIndicator signalLine = new EMAIndicator(macd, 9);
+
+        // Check for MACD line crossovers
+        boolean macdCrossAboveSignal = new CrossedUpIndicatorRule(macd, signalLine).isSatisfied(index);
+        boolean macdCrossBelowSignal = new CrossedDownIndicatorRule(macd, signalLine).isSatisfied(index);
+
+        if (macdCrossAboveSignal) {
+            return 1;
+        }
+        if (macdCrossBelowSignal) {
+            return -1;
+        }
         return 0;
+    }
+
+    public int getDivRsi(BarSeries series, int index) {
+        ClosePriceIndicator closes = new ClosePriceIndicator(series);
+        RSIIndicator rsi = new RSIIndicator(closes, 14);
+
+        return this.checkDivergence(closes, rsi, index, 70);
 
     }
 
-    /*
-     * macdCrossAboveSignal = (
-     * macdLine[-1] > signalLine[-1] and macdLine[-2] < signalLine[-2]
-     * )
-     * macdCrossBelowSignal = (
-     * macdLine[-1] < signalLine[-1] and macdLine[-2] > signalLine[-2]
-     * )
-     *
-     */
+    public int getDivMfi(BarSeries series, int index) {
+        ClosePriceIndicator closes = new ClosePriceIndicator(series);
+        MFIIndicator mfi = new MFIIndicator(series, 14);
+
+        return this.checkDivergence(closes, mfi, index, 70);
+
+    }
 
 }
