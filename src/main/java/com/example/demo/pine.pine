@@ -68,7 +68,7 @@ divergence_func(rsi_length, mfi_length) =>
     [bullish_divergence, bullish_divergence_mfi, bearish_divergence, bearish_divergence_mfi]
 
 // Function to check if price crosses moving average
-macdDivergenceWithSignalCross(macdSource ,macdShort ,macdLong ,macdSignal ) =>
+macdDivergenceWithSignalCross(macdSource ,macdShort ,macdLong ,macdSignal) =>
 
 
     [macdLine, signalLine, _] = ta.macd(macdSource, macdShort, macdLong, macdSignal)
