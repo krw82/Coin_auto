@@ -17,6 +17,6 @@ public interface CandleService {
 
     public List<AnalysisVo> selectCalcList(Map<String, Object> params);
 
-    public List<AnalysisVo> sendApiPythonClac(List<CandleVo> params);
+    public List<AnalysisVo> analysisCandles(List<CandleVo> params);
 
 }

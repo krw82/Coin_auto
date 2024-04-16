@@ -22,9 +22,4 @@ public class TaVo {
     private String interval;
     private int analyze;
 
-    public void setFirstCalc() {
-        calc = 5 + rsiBet + mfiCg + maCross180 + maCross30 + candleDoji + CehckDivergenceRsi14 + CehckDivergenceMfi14
-                + candleHammer + candleInverseHammer + macdSignal;
-    }
-
 }

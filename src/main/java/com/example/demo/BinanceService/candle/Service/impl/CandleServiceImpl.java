@@ -1,12 +1,18 @@
 package com.example.demo.BinanceService.candle.Service.impl;
 
+import java.time.Duration;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.ta4j.core.BarSeries;
+import org.ta4j.core.BaseBarSeriesBuilder;
 
 import com.example.demo.BinanceService.BinanceApi;
+import com.example.demo.BinanceService.TA.Service.TaService;
+import com.example.demo.BinanceService.TA.Vo.TaVo;
 import com.example.demo.BinanceService.candle.Service.CandleService;
 import com.example.demo.BinanceService.candle.Vo.AnalysisVo;
 import com.example.demo.BinanceService.candle.Vo.CandleVo;
@@ -23,6 +29,7 @@ public class CandleServiceImpl implements CandleService {
 
     private final BinanceApi binanceApi;
     private final TickerService tickerService;
+    private final TaService taService;
 
     @Override
     public List<CandleVo> getApiCandle(String symbol, String interval) {
@@ -45,9 +52,7 @@ public class CandleServiceImpl implements CandleService {
             List<TickerVo> tickerVos = tickerService.getTickers();
             tickerVos.forEach(ticker -> {
                 List<CandleVo> candleList = this.getApiCandle(ticker.getSymbol(), interval);
-                // 여기서 candleList를 Python 서비스로 보내는 로직 구현
-                // 예를 들어, Python 서비스 호출 결과를 AnalysisVo 객체로 변환하여 result에 추가
-                List<AnalysisVo> result = this.sendApiPythonClac(candleList);
+                List<AnalysisVo> result = this.analysisCandles(candleList);
                 this.insertClac(result); // 산출결과물 저장
             });
         } catch (Exception e) {
@@ -58,11 +63,7 @@ public class CandleServiceImpl implements CandleService {
 
     @Override
     public void insertClac(List<AnalysisVo> param) {
-        try {
 
-        } catch (Exception e) {
-
-        }
     }
 
     @Override
@@ -72,9 +73,25 @@ public class CandleServiceImpl implements CandleService {
     }
 
     @Override
-    public List<AnalysisVo> sendApiPythonClac(List<CandleVo> params) {
-        List<AnalysisVo> result = new ArrayList<>();
-        return result;
+    public List<AnalysisVo> analysisCandles(List<CandleVo> params) {
+        BarSeries bars = loadCandlestickData(params);
+        TaVo taVo = taService.analyze(bars);
+
+        return null;
+    }
+
+    private BarSeries loadCandlestickData(List<CandleVo> params) {
+        BarSeries series = new BaseBarSeriesBuilder().withName(params.get(0).getSymbol()).build();
+        params.stream().forEach(candleVo -> series.addBar(
+                Duration.ofDays(1),
+                ZonedDateTime.now(),
+                series.numOf(candleVo.getOpenPrice()), // 시가
+                series.numOf(candleVo.getHighPrice()), // 고가
+                series.numOf(candleVo.getLowPrice()), // 저가
+                series.numOf(candleVo.getClosePrice()), // 종가
+                series.numOf(candleVo.getVolume()) // 거래량
+        ));
+        return series;
     }
 
 }
