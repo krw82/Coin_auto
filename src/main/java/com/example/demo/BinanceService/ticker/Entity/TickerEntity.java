@@ -6,18 +6,15 @@ import java.util.Date;
 import javax.persistence.*;
 
 import lombok.AccessLevel;
-import lombok.Getter;
+import lombok.Data;
+
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
-@Setter
+@Data
 @Table(name = "coin_ticker")
 public class TickerEntity {
-
-    private Long id;
 
     @Id
     private String symbol;
@@ -45,8 +42,5 @@ public class TickerEntity {
     private long firstId;
     private long lastId;
     private long count;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date regDtm;
 
 }

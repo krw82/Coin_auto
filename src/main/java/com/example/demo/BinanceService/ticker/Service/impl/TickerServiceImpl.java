@@ -1,6 +1,7 @@
 package com.example.demo.BinanceService.ticker.Service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,7 @@ public class TickerServiceImpl implements TickerService {
         try {
             List<TickerVo> list = this.getApiTicker();
             // ModelMapper를 사용하여 VO 리스트를 Entity 리스트로 변환
+
             List<TickerEntity> entities = list.stream().map(tickerVo -> modelMapper.map(tickerVo, TickerEntity.class))
                     .collect(Collectors.toList());
             tickerRepository.saveAll(entities);

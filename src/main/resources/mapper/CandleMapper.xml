@@ -3,7 +3,7 @@
 
   <mapper namespace="com.example.demo.coin.Mapper.CandleMapper">
 
-    <insert id="insertCalc" parameterType="com.example.demo.coin.Vo.TickerAnalysisVo">
+    <insert id="insertCalc" parameterType="com.example.demo.BinanceService.candle.Vo.AnalysisVo">
         INSERT INTO coin_analysis (
             symbol
             ,rsibet
@@ -43,7 +43,7 @@
         )
     </insert>
 
-    <select id="selectcalc" resultType="com.example.demo.coin.Vo.TickerAnalysisVo">
+    <select id="selectcalc" resultType="com.example.demo.BinanceService.candle.Vo.AnalysisVo">
         SELECT
             symbol,calc
         FROM
@@ -53,7 +53,7 @@
 
     </select>
 
-    <select id="selectCalcList" resultType="com.example.demo.coin.Vo.TickerAnalysisVo" parameterType="HashMap">
+    <select id="selectCalcList" resultType="com.example.demo.BinanceService.candle.Vo.AnalysisVo" parameterType="HashMap">
         SELECT
             symbol
             ,rsibet
@@ -82,7 +82,7 @@
         ORDER BY created_at DESC
     </select>
 
-      <select id="selectCoinDetail" resultType="com.example.demo.coin.Vo.TickerAnalysisVo" parameterType="HashMap">
+      <select id="selectCoinDetail" resultType="com.example.demo.BinanceService.candle.Vo.AnalysisVo" parameterType="HashMap">
         SELECT
             symbol
             ,rsibet

@@ -1,11 +1,24 @@
-package com.example.demo.BinanceService.TA.Vo;
+package com.example.demo.BinanceService.candle.Entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class TaVo {
+@Entity
+@Table(name = "coin_analysis")
+public class AnalysisEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // PostgreSQL의 SERIAL과 호환
+    private Long seqNo;
+
     private String symbol;
     private int rsiBet;
     private int mfiCg;
@@ -17,16 +30,7 @@ public class TaVo {
     private int candleHammer;
     private int candleInverseHammer;
     private int macdSignal;
-    private boolean volumeAvg;
     private int calc;
     private String interval;
     private int coinAnalyze;
-
-    public void setCalc() {
-
-        this.calc = 5 + rsiBet + mfiCg + maCross30 + maCross180 + candleDoji + checkDivergenceRsi14
-                + checkDivergenceMfi14
-                + candleHammer + candleInverseHammer + macdSignal;
-    }
-
 }

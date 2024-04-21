@@ -2,6 +2,7 @@ package com.example.demo.BinanceService.TA;
 
 import org.python.antlr.PythonParser.raise_stmt_return;
 import org.python.modules.binascii;
+import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
 
 import org.ta4j.core.indicators.CachedIndicator;
@@ -21,7 +22,7 @@ public class TaUtil {
 
     public static int emaCheckCross(BarSeries series, int emaLength, int index) { // 이평 크로스 체크
 
-        EMAIndicator indicator = new EMAIndicator(new ClosePriceIndicator(series), 30);
+        SMAIndicator indicator = new SMAIndicator(new ClosePriceIndicator(series), emaLength);
         Num emaValue = indicator.getValue(index);
         Num openPrice = series.getBar(index).getOpenPrice();
         Num closePrice = series.getBar(index).getClosePrice();
@@ -84,6 +85,7 @@ public class TaUtil {
                 return 1;
             }
         }
+
         return 0;
     }
 

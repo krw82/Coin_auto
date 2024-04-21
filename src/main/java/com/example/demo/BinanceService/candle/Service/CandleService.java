@@ -3,6 +3,7 @@ package com.example.demo.BinanceService.candle.Service;
 import java.util.List;
 import java.util.Map;
 
+import com.example.demo.BinanceService.candle.Entity.AnalysisEntity;
 import com.example.demo.BinanceService.candle.Vo.AnalysisVo;
 import com.example.demo.BinanceService.candle.Vo.CandleVo;
 
@@ -13,10 +14,10 @@ public interface CandleService {
 
     public void calcCandle(String interval);
 
-    public void insertClac(List<AnalysisVo> param);
+    public void insertClac(AnalysisEntity param);
 
     public List<AnalysisVo> selectCalcList(Map<String, Object> params);
 
-    public List<AnalysisVo> analysisCandles(List<CandleVo> params);
+    public AnalysisEntity analysisCandles(List<CandleVo> params);
 
 }

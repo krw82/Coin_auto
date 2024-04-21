@@ -15,7 +15,7 @@ public class CandleVo {
     private double volume; // Volume (거래량)
     private long klineCloseTime; // Kline Close time (캔들 종료 시간)
     private double quoteAssetVolume; // Quote asset volume (거래 대상 자산의 거래량)
-    private int numberOfTrades; // Number of trades (거래 횟수)
+    private double numberOfTrades; // Number of trades (거래 횟수)
     private double takerBuyBaseAssetVolume; // Taker buy base asset volume (매수 주체의 거래량)
     private double takerBuyQuoteAssetVolume; // Taker buy quote asset volume (매수 주체의 거래 대상 자산 거래량)
     private String unusedField; // Unused field, ignore. (사용되지 않는 필드, 무시)
