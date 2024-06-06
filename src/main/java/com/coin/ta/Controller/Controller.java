@@ -1,9 +1,12 @@
 package com.coin.ta.Controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.coin.ta.BinanceService.candle.Entity.AnalysisEntity;
 import com.coin.ta.BinanceService.candle.Service.CandleService;
 import com.coin.ta.BinanceService.ticker.Service.TickerService;
 
@@ -24,10 +27,9 @@ public class Controller {
     }
 
     @GetMapping("/v2")
-    public ResponseEntity<String> test2() {
-        tickerService.insertTicker();
+    public List<AnalysisEntity> test2() {
+        return candleService.selectNowCalcList();
 
-        return ResponseEntity.ok("Success");
     }
 
 }

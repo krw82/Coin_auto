@@ -1,10 +1,8 @@
 package com.coin.ta.BinanceService.candle.Service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.coin.ta.BinanceService.candle.Entity.AnalysisEntity;
-import com.coin.ta.BinanceService.candle.Vo.AnalysisVo;
 import com.coin.ta.BinanceService.candle.Vo.CandleVo;
 
 public interface CandleService {
@@ -14,9 +12,9 @@ public interface CandleService {
 
     public void calcCandle(String interval);
 
-    public void insertClac(AnalysisEntity param);
+    public void insertClac(List<AnalysisEntity> param);
 
-    public List<AnalysisVo> selectCalcList(Map<String, Object> params);
+    public List<AnalysisEntity> selectNowCalcList();
 
     public AnalysisEntity analysisCandles(List<CandleVo> params);
 

@@ -2,6 +2,7 @@ package com.coin.ta.BinanceService.candle.Service.impl;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -26,7 +27,6 @@ import com.coin.ta.BinanceService.TA.Vo.TaVo;
 import com.coin.ta.BinanceService.candle.Entity.AnalysisEntity;
 import com.coin.ta.BinanceService.candle.Repository.AnalysisRepository;
 import com.coin.ta.BinanceService.candle.Service.CandleService;
-import com.coin.ta.BinanceService.candle.Vo.AnalysisVo;
 import com.coin.ta.BinanceService.candle.Vo.CandleVo;
 import com.coin.ta.BinanceService.ticker.Service.TickerService;
 import com.coin.ta.BinanceService.ticker.Vo.TickerVo;
@@ -46,34 +46,23 @@ public class CandleServiceImpl implements CandleService {
 
     @Override //
     public List<CandleVo> getApiCandle(String symbol, String interval) {
-        List<CandleVo> voList = null;
-        try {
-            voList = this.parseData(binanceApi.getMarcketCandle(symbol, interval, API_LIMIT));
-            /*
-             * voList = voList.stream()
-             * .sorted(Comparator.comparing(CandleVo::getKlineOpenTime).reversed())
-             * .collect(Collectors.toList()); // 최근값이 앞에 오게끔 변경
-             */
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return voList;
+        return this.parseData(binanceApi.getMarcketCandle(symbol, interval, API_LIMIT));
     }
 
     @Override
     public void calcCandle(String interval) {
         try {
             List<TickerVo> tickerVos = tickerService.getTickers();
+            List<AnalysisEntity> list = new ArrayList<>();
             tickerVos.forEach(ticker -> {
                 List<CandleVo> candleList = this.getApiCandle(ticker.getSymbol(), interval);
                 AnalysisEntity result = this.analysisCandles(candleList);
                 result.setSymbol(ticker.getSymbol());
                 result.setInterval(interval);
                 System.out.println(ticker.getSymbol());
-                this.insertClac(result); // 산출결과물 저장
-
+                list.add(result);
             });
+            this.insertClac(list);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,14 +70,15 @@ public class CandleServiceImpl implements CandleService {
     }
 
     @Override
-    public void insertClac(AnalysisEntity param) {
-        analysisRepository.save(param);
+    public void insertClac(List<AnalysisEntity> param) {
+        analysisRepository.saveAll(param);
     }
 
     @Override
-    public List<AnalysisVo> selectCalcList(Map<String, Object> params) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectCalcList'");
+    public List<AnalysisEntity> selectNowCalcList() {
+        int currentHour = LocalDateTime.now().getHour();
+        return analysisRepository.findByHour(currentHour);
+
     }
 
     @Override
