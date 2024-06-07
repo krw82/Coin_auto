@@ -7,17 +7,11 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
 
-import org.json.JSONArray;
 import org.modelmapper.ModelMapper;
-import org.python.antlr.PythonParser.raise_stmt_return;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseBarSeriesBuilder;
 
@@ -30,6 +24,7 @@ import com.coin.ta.BinanceService.candle.Service.CandleService;
 import com.coin.ta.BinanceService.candle.Vo.CandleVo;
 import com.coin.ta.BinanceService.ticker.Service.TickerService;
 import com.coin.ta.BinanceService.ticker.Vo.TickerVo;
+import com.coin.ta.Redis.RedisService;
 import com.google.gson.Gson;
 
 import lombok.RequiredArgsConstructor;
@@ -43,8 +38,9 @@ public class CandleServiceImpl implements CandleService {
     private final TaService taService;
     private final ModelMapper modelMapper;
     private final AnalysisRepository analysisRepository;
+    private final RedisService redisService;
 
-    @Override //
+    @Override
     public List<CandleVo> getApiCandle(String symbol, String interval) {
         return this.parseData(binanceApi.getMarcketCandle(symbol, interval, API_LIMIT));
     }
@@ -59,10 +55,10 @@ public class CandleServiceImpl implements CandleService {
                 AnalysisEntity result = this.analysisCandles(candleList);
                 result.setSymbol(ticker.getSymbol());
                 result.setInterval(interval);
-                System.out.println(ticker.getSymbol());
                 list.add(result);
             });
             this.insertClac(list);
+            redisService.setValue("calc", list);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,8 +72,8 @@ public class CandleServiceImpl implements CandleService {
 
     @Override
     public List<AnalysisEntity> selectNowCalcList() {
-        int currentHour = LocalDateTime.now().getHour();
-        return analysisRepository.findByHour(currentHour);
+
+        return (List<AnalysisEntity>) redisService.getValue("calc");
 
     }
 
@@ -99,6 +95,7 @@ public class CandleServiceImpl implements CandleService {
                 series.numOf(candleVo.getLowPrice()), // 저가
                 series.numOf(candleVo.getClosePrice()), // 종가
                 series.numOf(candleVo.getVolume()) // 거래량
+
         ));
         return series;
     }
