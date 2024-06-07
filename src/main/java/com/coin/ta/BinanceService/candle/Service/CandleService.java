@@ -5,6 +5,8 @@ import java.util.List;
 import com.coin.ta.BinanceService.candle.Entity.AnalysisEntity;
 import com.coin.ta.BinanceService.candle.Vo.CandleVo;
 
+import reactor.core.publisher.Mono;
+
 public interface CandleService {
     final String API_LIMIT = "200";
 
@@ -14,8 +16,10 @@ public interface CandleService {
 
     public void insertClac(List<AnalysisEntity> param);
 
-    public List<AnalysisEntity> selectNowCalcList();
+    public Mono<Object> selectNowCalcList();
 
     public AnalysisEntity analysisCandles(List<CandleVo> params);
+
+    void test();
 
 }

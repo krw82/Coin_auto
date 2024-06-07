@@ -11,7 +11,8 @@ import com.coin.ta.BinanceService.candle.Entity.AnalysisEntity;
 
 @Repository
 public interface AnalysisRepository extends JpaRepository<AnalysisEntity, Long> {
-    @Query("SELECT a FROM AnalysisEntity a WHERE EXTRACT(HOUR FROM a.regDtm) = :hour")
+    @Query("SELECT a FROM AnalysisEntity a WHERE EXTRACT(HOUR FROM a.regDtm) = :hour AND a.coinAnalyze!=0")
+
     List<AnalysisEntity> findByHour(@Param("hour") int hour);
 
 }

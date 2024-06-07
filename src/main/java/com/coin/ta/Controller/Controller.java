@@ -9,6 +9,7 @@ import com.coin.ta.BinanceService.candle.Entity.AnalysisEntity;
 import com.coin.ta.BinanceService.candle.Service.CandleService;
 
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Mono;
 
 @RestController
 
@@ -17,13 +18,18 @@ public class Controller {
     private final CandleService candleService;
 
     @GetMapping("/")
-    public List<AnalysisEntity> selectNowCalcList() {
+    public Mono<Object> selectNowCalcList() {
         return candleService.selectNowCalcList();
     }
 
     @GetMapping("/v2")
-    public List<AnalysisEntity> test2() {
-        return candleService.selectNowCalcList();
+    public void test2() {
+        candleService.calcCandle("1h");
+    }
+
+    @GetMapping("/v3")
+    public void test3() {
+        candleService.test();
     }
 
 }

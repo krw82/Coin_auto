@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -68,5 +70,6 @@ public class AnalysisEntity {
     private Integer coinAnalyze;
 
     @Column(name = "reg_dtm")
+    @ColumnDefault("NOW()")
     private Date regDtm;
 }

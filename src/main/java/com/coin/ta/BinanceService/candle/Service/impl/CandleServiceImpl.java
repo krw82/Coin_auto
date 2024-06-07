@@ -28,6 +28,7 @@ import com.coin.ta.Redis.RedisService;
 import com.google.gson.Gson;
 
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
@@ -58,7 +59,9 @@ public class CandleServiceImpl implements CandleService {
                 list.add(result);
             });
             this.insertClac(list);
-            redisService.setValue("calc", list);
+            redisService.deleteValue("calc");
+            redisService.setValue("calc", list).subscribe();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,9 +74,9 @@ public class CandleServiceImpl implements CandleService {
     }
 
     @Override
-    public List<AnalysisEntity> selectNowCalcList() {
-
-        return (List<AnalysisEntity>) redisService.getValue("calc");
+    public Mono<Object> selectNowCalcList() {
+        return redisService.getValue("calc")
+                .doOnNext(value -> System.out.println("Retrieved value: " + value));
 
     }
 
@@ -123,6 +126,17 @@ public class CandleServiceImpl implements CandleService {
         }
         return list;
 
+    }
+
+    @Override
+    public void test() {
+        redisService.setValue("test", "test").subscribe(success -> {
+            if (success) {
+                System.out.println("Successfully saved 'test' key with value 'test'");
+            } else {
+                System.out.println("Failed to save 'test' key with value 'test'");
+            }
+        });
     }
 
 }
