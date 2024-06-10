@@ -24,7 +24,7 @@ public class scheduledTasks {
 
     @Scheduled(cron = "0 50 8 * * ?") // 매일 8시 50분 실행
     public void dailyTaskAtEightFifty() {
-        tickerService.insertTicker();
+        tickerService.getApiTicker();
 
     }
 

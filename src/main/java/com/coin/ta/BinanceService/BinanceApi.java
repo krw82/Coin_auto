@@ -10,46 +10,43 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.coin.ta.MarketApiService;
+import com.coin.ta.BinanceService.candle.Entity.CandleEntity;
+import com.coin.ta.BinanceService.ticker.Entity.TickerEntity;
+import com.coin.ta.Util.WebClientService;
+
+import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Mono;
 
 @Component
+@RequiredArgsConstructor
 public class BinanceApi implements MarketApiService {
-
-    @Autowired
-    RestTemplate restTemplate;
+    private final WebClientService webClientService;
 
     @Override
     public String getMarcketCandle(String symbol, String interval, String limit) {
 
-        String result = "";
-
+        String urlString = "https://api.binance.com/api/v3/klines?symbol=" + symbol + "&interval=" + interval
+                + "&limit=" + limit;
         try {
-
-            String urlString = "https://api.binance.com/api/v3/klines?symbol=" + symbol + "&interval=" + interval
-                    + "&limit=" + limit;
-            URI uri = new URI(urlString);
-            result = restTemplate.getForObject(uri, String.class);
-
+            return webClientService.ApiGet(urlString, String.class)
+                    .block();
         } catch (Exception e) {
+            // 오류 처리 로직 추가
             e.printStackTrace();
+            throw new RuntimeException();
         }
-        return result;
-
     }
 
     @Override
     public String getMarcketTicker() {
-        String result = "";
+        String urlString = "https://api.binance.com/api/v3/ticker/24hr";
         try {
-            String urlString = "https://api.binance.com/api/v3/ticker/24hr";
-            URI uri = new URI(urlString);
-
-            result = restTemplate.getForObject(uri, String.class);
-
+            return webClientService.ApiGet(urlString, String.class)
+                    .block();
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return result;
-
     }
 
     // - Kline open time: 캔들 시작 시간

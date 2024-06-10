@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.coin.ta.BinanceService.candle.Entity.AnalysisEntity;
 import com.coin.ta.BinanceService.candle.Service.CandleService;
+import com.coin.ta.BinanceService.ticker.Entity.TickerEntity;
+import com.coin.ta.BinanceService.ticker.Service.TickerService;
 
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
@@ -16,6 +18,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class Controller {
     private final CandleService candleService;
+    private final TickerService tickerService;
 
     @GetMapping("/")
     public Mono<Object> selectNowCalcList() {
@@ -24,12 +27,13 @@ public class Controller {
 
     @GetMapping("/v2")
     public void test2() {
-        candleService.calcCandle("1h");
+        tickerService.getApiTicker();
     }
 
     @GetMapping("/v3")
-    public void test3() {
-        candleService.test();
+    public List<TickerEntity> test3() {
+        return tickerService.responseTicker();
+
     }
 
 }

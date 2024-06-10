@@ -22,6 +22,7 @@ import com.coin.ta.BinanceService.candle.Entity.AnalysisEntity;
 import com.coin.ta.BinanceService.candle.Repository.AnalysisRepository;
 import com.coin.ta.BinanceService.candle.Service.CandleService;
 import com.coin.ta.BinanceService.candle.Vo.CandleVo;
+import com.coin.ta.BinanceService.ticker.Entity.TickerEntity;
 import com.coin.ta.BinanceService.ticker.Service.TickerService;
 import com.coin.ta.BinanceService.ticker.Vo.TickerVo;
 import com.coin.ta.Redis.RedisService;
@@ -49,7 +50,7 @@ public class CandleServiceImpl implements CandleService {
     @Override
     public void calcCandle(String interval) {
         try {
-            List<TickerVo> tickerVos = tickerService.getTickers();
+            List<TickerEntity> tickerVos = tickerService.getTickers();
             List<AnalysisEntity> list = new ArrayList<>();
             tickerVos.forEach(ticker -> {
                 List<CandleVo> candleList = this.getApiCandle(ticker.getSymbol(), interval);
@@ -126,17 +127,6 @@ public class CandleServiceImpl implements CandleService {
         }
         return list;
 
-    }
-
-    @Override
-    public void test() {
-        redisService.setValue("test", "test").subscribe(success -> {
-            if (success) {
-                System.out.println("Successfully saved 'test' key with value 'test'");
-            } else {
-                System.out.println("Failed to save 'test' key with value 'test'");
-            }
-        });
     }
 
 }

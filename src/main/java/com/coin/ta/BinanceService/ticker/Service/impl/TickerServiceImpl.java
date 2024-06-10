@@ -9,16 +9,14 @@ import org.modelmapper.ModelMapper;
 
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.RequiredArgsConstructor;
 
 import com.coin.ta.BinanceService.BinanceApi;
 import com.coin.ta.BinanceService.ticker.Entity.TickerEntity;
 import com.coin.ta.BinanceService.ticker.Repository.TickerRepository;
 import com.coin.ta.BinanceService.ticker.Service.TickerService;
-import com.coin.ta.BinanceService.ticker.Vo.TickerVo;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 @RequiredArgsConstructor
@@ -28,47 +26,35 @@ public class TickerServiceImpl implements TickerService {
 
     private final TickerRepository tickerRepository;
 
-    private final ModelMapper modelMapper;
+    private final ObjectMapper objectMapper;
 
     @Override
-
-    public void insertTicker() {
-
-        try {
-            List<TickerVo> list = this.getApiTicker();
-            // ModelMapper를 사용하여 VO 리스트를 Entity 리스트로 변환
-
-            List<TickerEntity> entities = list.stream().map(tickerVo -> modelMapper.map(tickerVo, TickerEntity.class))
-                    .collect(Collectors.toList());
-            tickerRepository.saveAll(entities);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public List<TickerVo> getTickers() {
+    public List<TickerEntity> getTickers() {
         List<TickerEntity> list = tickerRepository.findTop40ByOrderByVolumeDesc();
-        List<TickerVo> vos = list.stream().map(entities -> modelMapper.map(entities, TickerVo.class))
-                .collect(Collectors.toList());
-        return vos;
+        return list;
     }
 
     @Override
-    public List<TickerVo> getApiTicker() {
-        List<TickerVo> voList = new ArrayList<>();
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            voList = objectMapper.readValue(binanceApi.getMarcketTicker(),
-                    new TypeReference<List<TickerVo>>() {
-                    });
+    public void getApiTicker() {
 
+        try {
+
+            String response = binanceApi.getMarcketTicker();
+            // Api티커 받는거 넣기
+            if (response != null) {
+                List<TickerEntity> tickers = objectMapper.readValue(response, new TypeReference<List<TickerEntity>>() {
+                });
+                tickerRepository.saveAll(tickers);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return voList;
+    }
+
+    @Override
+    public List<TickerEntity> responseTicker() {
+        return tickerRepository.findAll();
     }
 
 }

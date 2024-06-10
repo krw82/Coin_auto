@@ -19,7 +19,4 @@ public interface CandleService {
     public Mono<Object> selectNowCalcList();
 
     public AnalysisEntity analysisCandles(List<CandleVo> params);
-
-    void test();
-
 }

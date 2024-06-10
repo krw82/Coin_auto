@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "coin_analysis", schema = "coin")
+@Table(name = "coin_analysis")
 public class AnalysisEntity {
 
     @Id
@@ -63,7 +63,7 @@ public class AnalysisEntity {
     @Column(name = "calc")
     private Integer calc;
 
-    @Column(name = "interval", length = 50)
+    @Column(name = "chart_frame", length = 50)
     private String interval;
 
     @Column(name = "coin_analyze")
