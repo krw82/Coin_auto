@@ -1,9 +1,11 @@
 package com.coin.ta.BinanceService.candle.Entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +13,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +23,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "coin_analysis")
+@Table(name = "analysis")
+@EntityListeners(AuditingEntityListener.class)
 public class AnalysisEntity {
 
     @Id
@@ -69,7 +75,9 @@ public class AnalysisEntity {
     @Column(name = "coin_analyze")
     private Integer coinAnalyze;
 
-    @Column(name = "reg_dtm")
-    @ColumnDefault("NOW()")
-    private Date regDtm;
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
 }

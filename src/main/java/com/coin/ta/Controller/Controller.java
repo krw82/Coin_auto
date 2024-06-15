@@ -3,6 +3,7 @@ package com.coin.ta.Controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.coin.ta.BinanceService.candle.Entity.AnalysisEntity;
@@ -14,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
 @RestController
-
 @RequiredArgsConstructor
 public class Controller {
     private final CandleService candleService;
@@ -25,15 +25,19 @@ public class Controller {
         return candleService.selectNowCalcList();
     }
 
-    @GetMapping("/v2")
-    public void test2() {
+    @GetMapping("/setTicker")
+    public void setTicker() {
         tickerService.getApiTicker();
     }
 
-    @GetMapping("/v3")
-    public List<TickerEntity> test3() {
+    @GetMapping("/getTicker")
+    public List<TickerEntity> getTicker() {
         return tickerService.responseTicker();
+    }
 
+    @GetMapping("/calcCandle")
+    public void calcCandle(@RequestParam("intaval") String intaval) {
+        candleService.calcCandle(intaval);
     }
 
 }

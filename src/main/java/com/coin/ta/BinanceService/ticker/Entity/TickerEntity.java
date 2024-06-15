@@ -1,19 +1,22 @@
 
 package com.coin.ta.BinanceService.ticker.Entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
-import lombok.AccessLevel;
-import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Data
-@Table(name = "coin_ticker")
+@Getter
+@Setter
+@Table(name = "ticker")
+@EntityListeners(AuditingEntityListener.class)
 public class TickerEntity {
 
     @Id
@@ -42,5 +45,11 @@ public class TickerEntity {
     private long firstId;
     private long lastId;
     private long count;
+
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
 
 }
