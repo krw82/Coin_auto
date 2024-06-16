@@ -60,8 +60,8 @@ public class CandleServiceImpl implements CandleService {
                 list.add(result);
             });
             this.insertClac(list);
-            redisService.deleteValue("calc");
-            redisService.setValue("calc", list).subscribe();
+            redisService.deleteValue("calc").then(
+                    redisService.setValue("calc", list)).subscribe();
 
         } catch (Exception e) {
             e.printStackTrace();
